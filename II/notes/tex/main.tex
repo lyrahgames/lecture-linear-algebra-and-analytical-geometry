@@ -1,0 +1,1434 @@
+\input{pre}
+
+\title{Lineare Algebra und Analytische Geometrie II}
+\author{Markus Pawellek}
+
+\ihead[]{\leftmark}
+\ohead[]{\rightmark}
+\cfoot[]{\newline\newline\newline\pagemark}
+
+\begin{document}
+
+	\maketitle{\thispagestyle{empty}}
+	\tableofcontents
+	\newpage
+	\pagestyle{empty}
+	% \listoffigures
+	% \listoftables
+	\listofmath
+	% \lstlistoflistings
+	% \listoflistings
+	\newpage
+	\pagestyle{scrheadings}
+	\pagenumbering{arabic}
+	
+	\section{Wiederholung} % (fold)
+	\label{sec:wiederholung}
+	
+		\begin{definition}[Gruppe]
+			Sei $G$ eine Menge und sei \D{\ \star :G\times G\longrightarrow G \ } eine Abbildung mit den folgenden Eigenschaften.
+			\begin{enumerate}[label = \normalfont{(G\arabic*)}]
+				\item Es gibt ein $e\in G$, sodass für alle $g\in G$ gilt
+					\[
+						e\star g = g\star e = g \hfill\text{(neutrales Element)}
+					\] 
+				\item Für alle $g,f,h \in G$ gilt
+					\[
+						\curvb{g\star f}\star h = g\star\curvb{f\star h} \hfill\text{(Assoziativität)}
+					\]
+				\item Für alle $g\in G$ gibt es ein $g^{-1}\in G$ mit
+					\[
+						g\star g^{-1} = g^{-1}\star g = e \hfill\text{(inverses Element)}
+					\]
+			\end{enumerate}
+			Dann nennt man $\curvb{G,\star}$ oder auch $G$ eine Gruppe.
+			Gilt darüber hinaus für alle $g,f\in G$ auch
+			\[
+				f\star g = g\star f \hfill\text{(Kommutativität)}
+			\]
+			so nennt man $(G,\star)$ auch abelsche Gruppe.
+		\end{definition}
+
+		\begin{definition}[Vektorraum]
+			Sei $K$ ein Körper. 
+			Seien weiterhin $\curvb{V,+}$ eine abelsche Gruppe und \D{\ \star :K\times V\longrightarrow V \ } eine Abbildung mit den folgenden Eigenschaften für alle $u,v\in V$ und alle $a,b\in K$.
+			\begin{enumerate}[label = \normalfont{(V\arabic*)}]
+				\item $ 1\star v = v \hfill\text{(neutrales Element)} $
+				\item $ (ab)\star v = a\star(b\star v) \hfill\text{(Assoziativität)} $
+				\item $ (a+b)\star v = a\star v + b\star v \hfill\text{(1.Distributivgesetz)} $
+				\item $ a\star (v+u) = a\star v + a\star u \hfill\text{(2.Distributivgesetz)} $
+			\end{enumerate}
+			Dann nennt man $\curvb{V,+,\star}$ oder auch $V$ einen $K$-Vektorraum.
+		\end{definition}
+
+		\begin{definition}[Vektorraumendomorphismus]
+			Sei $(V,+,\star)$ ein $K$-Vektorraum.
+			Eine Abbildung $\varphi:V\longrightarrow V$ heißt Endomorphismus, wenn $\varphi$ linear ist, das heißt für alle $a\in K$ und $x,y\in V$ gilt
+			\[
+				\varphi((a\star x)+y) = a\star\varphi(x) + \varphi(y)
+			\]
+		\end{definition}
+
+		\begin{lemma}[$\m{GI}_n(\SR)$ ist Gruppe]
+			Die Menge der reellen invertierbaren Matrizen
+			\[
+				\m{GI}_n(\SR) := \set{A\in \m{M}_n(\SR)}{\det A \neq 0}
+			\]
+			ist bezüglich der Matrixmultiplikation eine Gruppe.
+		\end{lemma}
+		\begin{proof}[Lemma\ \ref{corollary:charac}]
+			Es gilt im allgemeinen für alle $A,B\in GI_n(\SR)$
+			\[
+				\det(AB) = \det A \cdot\det B \neq 0 \ \Rightarrow \ AB\in \m{GI}_n(\SR)
+			\]
+			Weiterhin folgt
+			\[
+				\det A \neq 0 \quad \implies \quad \text{es gibt } A^{-1}\in \m{GI}_n(\SR) \text{ mit } A^{-1}A=I
+			\]
+			Die Identitätsmatrix beschreibt das neutrale Element.
+			Die Matrixmultiplikation ist assoziativ.
+			$\m{GI}_n$ ist damit gerade eine Gruppe.
+		\end{proof}
+
+	% section wiederholung (end)
+	
+	\section{Skalarprodukt und orthogonale Matrizen} % (fold)
+	\label{sub:skalarprodukt_und_orthogonale_matrizen}
+	
+		Im Folgenden soll es das Ziel sein, eine geeignete Charakterisierung von 2- und 3-dimensionalen Drehungen im euklidischen Raum zu finden.
+		Dafür soll als Grundgerüst die euklidische Geometrie verwendet werden.
+		Durch Einführung weiterer Konzepte sollen die erhaltenen Ergebnisse dann für ein $n\in\SN$ auf dem $n$-dimensionalen euklidischen Raum verallgemeinert werden.
+
+		\begin{definition}[orthogonale Matrix, $\m{O}_n$]
+			Sei $n\in\SN$. 
+			Eine reelle invertierbare $n\times n$-Matrix $A\in \m{M}_n(\SR)$ heißt orthogonal genau dann, wenn
+			\[
+				A\transp = A^{-1}
+			\]
+			Die Menge der orthogonalen Matrizen sei dann
+			\[
+				\m{O}_n := \set{A\in \m{M}_n(\SR)}{\det A \neq 0,\ A\transp A=\idmat}
+			\]
+		\end{definition}
+
+		\begin{lemma}[$\m{O}_n$ ist Untergruppe]
+			Sei $n\in\SN$.
+			Die Menge der orthogonalen Matrizen $\m{O}_n$ bildet eine Untergruppe von $\m{GI}_n(\SR)$ bezüglich der Matrixmultiplikation.
+
+		\end{lemma}
+		\begin{proof}
+			Es seien $A,B\in \m{O}_n$. Dann gilt
+			\[
+				(AB)\transp AB = B\transp A\transp AB = B\transp \idmat B = B\transp B = \idmat \quad \implies \quad AB\in \m{O}_n
+			\]
+			Weiterhin gilt
+			\[
+				A^{-1}\curvb{A^{-1}}\transp  = A\transp \curvb{A\transp}\transp = A\transp A = \idmat \quad \implies \quad A^{-1}\in \m{O}_n
+			\]
+			Damit ist $\m{O}_n$ eine Untergruppe.
+		\end{proof}
+
+		\begin{proposition}[Determinante orthogonaler Matrizen]
+			Seien $n\in\SN$ und $A\in \m{O}_n$. Dann gilt
+			\[
+				\abs{\det A} = 1
+			\]
+		\end{proposition}
+		\begin{proof}
+			Es gilt $A\transp A=\idmat$. Daraus folgt
+			\[
+				1 = \det\idmat = \det (A\transp A) = \det A\transp \det A = \curvb{\det A}^2 \quad \implies \quad \abs{\det A} = 1
+			\]
+		\end{proof}
+
+		Ist die Determinante einer orthogonalen Matrix gerade $-1$, so spiegelt sie den Raum.
+		Dies kann man sich am Beispiel von
+		\[
+			A:=\diag(1,-1)\in\SR^2
+		\]
+		klar machen.
+		Hier wird der Raum nicht gedreht, sondern nur an der Abszisse gespiegelt.
+		Damit wird also eine spezielle Teilmenge aus $\m{O}_n$ benötigt, um Drehungen zu charakterisieren.
+
+		\begin{definition}[spezielle Teilmenge $\m{SO}_n$]
+			Sei $n\in\SN$.
+			Dann sei die Menge der $n$-dimensionalen orthogonalen Matrizen mit Determinante 1
+			\[
+				\m{SO}_n := \set{A\in \m{O}_n}{\det A = 1}
+			\]
+		\end{definition}
+
+		\begin{lemma}[$\m{SO}_n$ ist Untergruppe]
+			Sei $n\in\SN$.
+			Dann bildet $\m{SO}_n$ eine spezielle Untergruppe von $\m{O}_n$.
+		\end{lemma}
+		\begin{proof}
+			\[ A=B \]
+		\end{proof}
+
+		Die Drehungen im 2- und 3-dimensionalen sind nun gerade Elemente aus $\m{SO}_2$ beziehungsweise $\m{SO}_3$.
+		Dies ist der Grund, weshalb $\m{SO}_n$ auch $n$-dimensionale Drehgruppe genannt wird.
+
+		% \begin{corollary}[mehrere Drehungen sind wieder eine Drehung]
+		% 	Die Zusammensetzung von zwei Drehungen um den Nullpunkt im $\SR^3$ ist wieder eine Drehung.
+		% \end{corollary}
+
+
+		\begin{definition}[Standardskalarprodukt und -norm auf $\SR^n$]
+			Sei $n\in\SN$. 
+			Die folgende Abbildung wird Standardskalarprodukt auf $\SR^n$ genannt.
+			\[
+				\angleb{\cdot, \cdot}:\SR^n\times\SR^n\longrightarrow\SR,\qquad \angleb{x,y} = \sum_{i=1}^n x_iy_i = x\transp y
+			\]
+			Die zugehörige induzierte Standardnorm auf $\SR^n$ sei dann
+			\[
+				\norm{\cdot}:\SR^n\longrightarrow[0,\infty),\qquad \norm{x} = \sqrt{\angleb{x,x}} = \curvb{\sum_{i=1}^n x_i^2}^{\frac{1}{2}}
+			\]
+			Ein $x\in\SR^n$ mit $\norm{x}=1$ heißt Einheitsvektor oder auch normierter Vektor.
+		\end{definition}
+
+		$\norm{x-y}$ stellt gerade den Abstand zwischen $x$ und $y$ dar.
+		$\angleb{x,y}$ enthält zusätzlich noch die Information über den Winkel zwischen den Vektoren $x,y$.
+
+		\begin{proposition}[Zusammenhang Skalarprodukt und Winkel]
+		\label{prop:skalarproduktregel}
+			Seien $x,y\in\SR^n$ für $n\in\SN$ und $\vartheta\in[0,2\pi)$ der Winkel zwischen $x,y$. Dann gilt
+			\[
+				\angleb{x,y} = \norm{x}\norm{y}\cos \vartheta
+			\]
+		\end{proposition}
+		\begin{proof}
+			Aus der Bilinearität und dem Kosinussatz folgt die Aussage direkt.
+		\end{proof}
+
+		\begin{corollary}[Charakterisierung Orthogonalität]
+		\label{corollary:charac}
+			Seien $x,y\in\SR^n$.
+			Dann ist
+			\[
+				x \perp y \equivalent \angleb{x,y} = 0
+			\]
+		\end{corollary}
+		\begin{proof}[\corollarycall  \ref{corollary:charac}]
+			Ist $\varphi\in [0,2\pi)$ der Winkel zwischen $x$ und $y$, dann muss $\varphi = \pi/2$ gelten, wenn sie senkrecht aufeinander stehen.
+			Nach Proposition \ref{prop:skalarproduktregel} folgt nun direkt
+			\[
+				\angleb{x,y} = \norm{x}\norm{y}\cos\frac{\pi}{2} = 0
+			\]
+		\end{proof}
+
+		\begin{theorem}[Charakterisierung orthogonaler Matrizen]
+		\label{theorem:charakterisierung orthogonale matrizen}
+			Sei $A\in M_n(\SR)$ für $n\in\SN$. 
+			Dann sind folgende Aussagen äquivalent.
+			\begin{enumerate}[label = \normalfont(\roman*)]
+				\item $A$ ist orthogonal.
+				\item Für alle $x,y\in\SR^n$ gilt
+					\[
+						\angleb{Ax,Ay} = \angleb{x,y}
+					\]
+				\item Die Spaltenvektoren von $A$ sind paarweise orthogonale Einheitsvektoren.
+			\end{enumerate}
+		\end{theorem}
+		\begin{proof}
+			(i)$\equivalent$(ii):\\
+			Sei $A$ orthogonal. 
+			In diesem Falle gilt
+			\[
+				AA^T=I \ \Leftrightarrow \ \angleb{x,y} = x^Ty = x^TA^TAy = (Ax)^TAy = \angleb{Ax,Ay} \text{ für alle } x,y\in\SR^n
+			\]
+
+			(ii)$\Rightarrow$(iii):\\
+			Es sei $A=(a_1,\ldots,a_n)$ mit $a_i\in\SR^n$ für $1\leq i\leq n$. Für alle $x,y\in\SR^n$ gilt $\angleb{Ax,Ay} = \angleb{x,y}$.
+			Weiterhin seien die $e_i$ für $1\leq i\leq n$ die kartesischen Einheitsvektoren.
+			Dann folgt für $i,j\leq n$
+			\[
+				a_i = Ae_i \ \Rightarrow \ \angleb{a_i,a_j} = \angleb{Ae_i, Ae_j} \stackrel{(Vor.)}{=} \angleb{e_i,e_j} = \delta_{ij}
+			\]
+
+
+			(iii)$\Rightarrow$(i):\\
+			Es sei $A=(a_1,\ldots,a_n)$ mit $a_i\in\SR^n$ für $1\leq i\leq n$, sodass $\angleb{a_i,a_j}=\delta_{ij}$.
+			Es gelte $A^TA = (c_{ij})$.
+			Dann folgt durch Rechnung
+			\[
+				c_{ij} = \angleb{a_i,a_j} = \delta_{ij} \ \Rightarrow \ A^TA=I
+			\]
+		\end{proof}
+
+		\begin{definition}[Orthonormalbasis]
+			Seien $V$ ein $K$-Vektorraum und $B=\curlb{b_1,\ldots,b_n}$ für $n\in\SN$ eine Basis.
+			Dann ist $B$ eine Orthonormalbasis genau dann, wenn für alle $i,j\in\SN$ mit $i,j\leq n$ Folgendes gilt.	
+			\[
+				\angleb{b_i,b_j}=\delta_{ij} =
+				\begin{cases}
+					1 &:i=j \\
+					0 &:i\neq j
+				\end{cases}
+			\]
+		\end{definition}
+
+		Im Falle $i=j$ bedeutet dies gerade $\angleb{b_i,b_i} = \norm{b_i}^2 = 1$.
+		Die Basisvektoren einer Orthonormalbasis stehen also senkrecht aufeinander und haben jeweils die Länge 1.
+
+		\begin{definition}[orthogonaler Endomorphismus]
+			Sei $n\in\SN$.
+			Sei $\varphi:\SR^n\longrightarrow\SR^n$ ein Endomorphismus.
+			$\varphi$ heißt orthogonal, wenn für alle $x,y\in\SR^n$ gilt
+			\[
+				\angleb{x,y} = \angleb{\varphi(x), \varphi(y)}
+			\]
+		\end{definition}
+
+		\begin{definition}[Isometrie]
+			Eine euklidische Bewegung oder auch Isometrie auf $\SR^n$ ist eine abstandstreue Abbildung $\beta:\SR^n\longrightarrow\SR^n$,
+			das heißt für alle $x,y\in\SR^n$ gilt
+			\[
+				\norm{\beta(x) - \beta(y)} = \norm{x-y}
+			\]
+			Erfüllt $\beta$ darüber hinaus auch die Eigenschaft
+			\[
+				\beta(0) = 0
+			\]
+			so nennt man $\beta$ hier eine homogene Isometrie.
+			% Die Menge der Isometrien bildet die Bewegungsgruppe oder auch Isometriegruppe.
+		\end{definition}
+
+		\begin{lemma}[Isometrien bilden Gruppe]
+			Sei $n\in\SN$. Die Menge der Isometrien auf $\SR^n$ bildet bezüglich der Komposition eine Gruppe.
+			Diese Gruppe wird auch Bewegungs- oder Isometriegruppe genannt.
+		\end{lemma}
+		\begin{proof}
+			Seien $\alpha,\beta$ Isometrien auf $\SR^n$.
+			\[
+				\norm{\alpha(\beta(x))-\alpha(\beta(y))} \stackrel{\text{($\alpha$ Iso.)}}{=} \norm{\beta(x) - \beta(y)} \stackrel{\text{($\beta$ Iso.)}}{=} \norm{x-y}
+			\]
+			\[
+				\Rightarrow \ \alpha\circ\beta \text{ ist Isometrie auf } \SR^n
+			\]
+			Das neutrale Element wird durch die Identität, welche auch eine Isometrie ist, beschrieben.
+			
+
+			Weiterhin ist die Komposition von Funktionen im Allgemeinen assoziativ.
+			Gibt es nun zu $\beta$ eine inverse Funktion $\beta^{-1}$ folgert man
+			\[
+				\norm{\beta(x)-\beta(y)} = \norm{x-y} = \norm{\beta^{-1}(\beta(x)) - \beta^{-1}(\beta(y))}
+			\]
+			Mit $\tilde{x}:=\beta(x)$ und $\tilde{y}:=\beta(y)$ ist ersichtlich, dass $\beta^{-1}$ eine Isometrie sein muss.
+			\[
+				\norm{\tilde{x}-\tilde{y}} = \norm{\beta^{-1}(\tilde{x})-\beta^{-1}(\tilde{y})} \ \Leftrightarrow \ \beta^{-1} \text{ ist Isometrie}
+			\]
+			Zu zeigen ist nun noch, dass $\beta^{-1}$ existiert.
+			Seien nun $x,y\in\SR^n$ mit $\beta(x)=\beta(y)$.
+			Dann gilt per Definition
+			\[
+				0 = \norm{\beta(x)-\beta(y)} = \norm{x-y} \ \Leftrightarrow \ x-y = 0 \ \Leftrightarrow \ x = y 
+			\]
+			\[
+				\Leftrightarrow \ \beta \text{ ist bijektiv} \ \Leftrightarrow \ \beta^{-1} \text{ existiert}
+			\]
+		\end{proof}
+
+		\begin{theorem}[Charakterisierung homogene Isometrie]
+			Sei $\beta:\SR^n\longrightarrow \SR^n$ für $n\in\SN$ eine Abbildung.
+			Dann sind folgende Aussagen äquivalent.
+			\begin{enumerate}[label = \normalfont(\roman*)]
+				\item $\beta$ ist eine Isometrie mit $\beta(0)=0$.
+				\item Für alle $x,y\in\SR^n$ gilt 
+					\[
+						\angleb{\beta(x), \beta(y)} = \angleb{x,y}
+					\]
+				\item $\beta$ ist gegeben durch Linksmultiplikation mit einer orthogonalen Matrix.
+			\end{enumerate}
+
+		\end{theorem}
+		\begin{proof}
+			(i)$\Rightarrow$(ii):\\
+			Es seien $\beta$ eine homogene Isometrie und $x,y\in\SR^n$ beliebig.
+			\[
+				\norm{\beta(x)-\beta(y)}^2 = \angleb{\beta(x)-\beta(y), \beta(x)-\beta(y)} = \norm{x-y}^2 = \angleb{x-y,x-y}
+			\]
+			Setze nun $y=0$.
+			\[
+				\Rightarrow \norm{\beta(x)}^2 = \angleb{\beta(x),\beta(x)} = \angleb{x,x} = \norm{x}^2
+			\]
+			Aus der Bilinearität von $\angleb{\cdot,\cdot}$ folgt wieder für beliebige $y$
+			\[
+				\norm{x-y}^2 = \norm{x}^2 + \norm{y}^2 - 2\angleb{x,y}
+			\]
+			\[
+				\Rightarrow \ \norm{\beta(x)}^2 + \norm{\beta(y)}^2 - 2\angleb{\beta(x),\beta(y)} = \norm{x}^2 + \norm{y}^2 - 2\angleb{x,y}
+			\]
+			\[
+				\Rightarrow \ \angleb{\beta(x), \beta(y)} = \angleb{x,y}
+			\]
+			(ii)$\Rightarrow$(iii):\\
+			Die einzige Abbildung, welche nun das Skalarprodukt erhält und die Einheitsvektoren auf sich selbst abbildet, ist die Identität.
+			\[
+				\angleb{x,e_i} = \angleb{\beta(x), \beta(e_i)} = \angleb{\beta(x), e_i}
+			\]
+			\[
+				\Rightarrow \ x_i^\prime = x_i \text{ für alle } i\in\curlb{1,\ldots,n} \ \Leftrightarrow \ x^\prime = x \ \Leftrightarrow \ \beta = \id
+			\]
+			Für ein allgemeines $\beta$ folgt nun, dass $\set{\beta(e_i)}{1\leq i\leq n}$ ein Orthonormalsystem ist, wegen
+			\[
+				\delta_{ij} = \angleb{e_i,e_j} = \angleb{\beta(e_i),\beta(e_j)}
+			\]
+			Da $\beta$ ein Endomorphismus ist, gibt es eine Matrix $A\in M_n(\SR)$, sodass $\beta(x) = Ax$.
+			Diese Matrix ist eindeutig bestimmt.
+			\[
+				A:=\curvb{\beta(e_1),\ldots,\beta(e_n)}
+			\]
+			Dann gilt nach Theorem \ref{theorem:charakterisierung orthogonale matrizen} über die Charakterisierung orthogonaler Matrizen, dass $A$ orthogonal ist.\smallskip \\
+			(iii)$\Rightarrow$(i):\\
+			Folgt ebenfalls aus dem Theorem \ref{theorem:charakterisierung orthogonale matrizen}.
+		\end{proof}
+
+		\begin{definition}[Translation]
+			Sei $n\in\SN$. 
+			Für $b\in\SR^n$ sei die Translation $t_b$ die Abbildung
+			\[
+				t_b:\SR^n\longrightarrow\SR^n,\qquad t_b(x) = x+b
+			\]
+		\end{definition}
+
+		\begin{lemma}[Translation ist Isometrie]
+			Jede Translation ist eine Isometrie.
+		\end{lemma}
+		\begin{proof}
+			Klar.
+		\end{proof}
+
+		\begin{theorem}[Charakterisierung Isometrie]
+		\label{theorem:charakterisierung isometrie}
+			Sei $\beta$ eine Isometrie auf $\SR^n$ für $n\in\SN$.
+			Dann gibt es genau ein $A\in O_n$ und genau ein $b\in\SR^n$, sodass für alle $x\in\SR^n$
+			\[
+				\beta(x) = Ax + b
+			\]
+		\end{theorem}
+		\begin{proof}
+			Sei $\beta(0)=b\in\SR^n$. 
+			Dann gilt $t_{-b}\circ \beta(0) = 0$.
+			Dann ist $t_{-b}\circ \beta$ eine homogene Isometrie und gerade durch die Linksmultiplikation mit einer orthogonalen Matrix $A\in O_n$ gegeben.
+			\[
+				\Leftrightarrow \ t_{-b}\circ \beta(x)=Ax \ \Leftrightarrow \ \beta(x) = Ax + b
+			\]
+		\end{proof}
+
+		Nach dem obigen Beweis für Theorem \ref{theorem:charakterisierung isometrie} sind $A$ und $b$ für ein $\beta$ eindeutig bestimmt.
+		Die euklidischen Bewegungen teilen sich damit gerade in Spiegelungen, Drehungen und Translationen auf.
+
+		\begin{definition}[Orientierung]
+			Sei $A\in O_n$ für $n\in\SN$ ein orthogonaler Endomorphismus.
+			$A$ heißt orientierungserhaltend, wenn $\det A = 1$, und orientierungsumkehrend, wenn $\det A = -1$.
+			Eine analoge Definition sei für den homogenen Anteil der Isometrien gegeben.
+		\end{definition}
+
+		\begin{lemma}[$A\in SO_3$ besitzt 1 als Eigenwert]
+			Für alle $A\in SO_3$ gilt $1\in\lambda(A)$.
+		\end{lemma}
+		\begin{proof}
+			\[
+				\det (A-I) = \det(A^T)\det(A-I) = \det((E-A)^T) = \det(E-A) = (-1)^n \det(A-I)
+			\]
+		\end{proof}
+
+		\begin{corollary}[Charakterisierung Drehungen]
+			Die Drehungen in $\SR^n$ sind gerade die homogenen orientierungserhaltenden Isometrien.
+		\end{corollary}
+		\begin{proof}
+			Es ist bereits klar, dass jede Drehung eine Isometrie ist.
+			Die Determinante des zugehörigen Endomorphismus muss stetig vom Winkel abhängen.
+			Die Drehung um den Winkel $0$ entspricht $\det I = 1$.
+			Es müssen damit alle Determinanten $1$ sein, da sie sonst nur $-1$ sein könnten.
+
+			Jede Drehung kann auf den zweidimensionalen Fall zurückgeführt werden.
+			Bestimme den Unterraum, der auf sich selbst abgebildet wird und berechne die Matrix, welche die Einheitsvektoren in dieser Ebene abbildet.
+		\end{proof}
+
+	% subsection skalarprodukt_und_orthogonale_matrizen (end)
+
+	\section{Bilinearformen} % (fold)
+	\label{sec:bilinearformen}
+	
+		Im folgenden sei $K$ ein Körper und $V$ ein $K$-Vektorraum.
+
+		\begin{definition}[Bilinearform]
+			Eine Bilinearform $b$ auf V ist eine Abbildung $b:V\times V\longrightarrow K$, sodass für alle $u,v,w\in V$ und alle $\alpha,\beta\in K$ gilt 
+			\[
+				b(\alpha v + \beta w, u) = \alpha b(v,u) + \beta b(w,u)
+			\]
+			\[
+				b(u, \alpha v + \beta w) = \alpha b(u,v) + \beta b(u,w)
+			\]
+		\end{definition}
+
+		\textsc{Beispiel:}\\
+		Das Standardskalarprodukt ist eine Bilinearform.
+
+		\begin{definition}[symmetrische und schiefsymmetrische Bilinearform]
+			Eine Bilinearform $b$ heißt symmetrisch, wenn für alle $v,w\in V$ gilt
+			\[
+				b(v,w) = b(w,v)
+			\]
+			und schiefsymmetrisch, wenn für alle $v,w\in V$ gilt
+			\[
+				b(v,w) = -b(w,v) \text{ oder } b(v,v) = 0
+			\]
+		\end{definition}
+
+		Für das Skalarprodukt gilt, dass 
+		\[
+			\angleb{v,v} > 0
+		\]
+		für alle $v\in V$ mit $v\neq 0$.
+
+		\begin{definition}[positiv definite Bilinearform]
+			Eine Bilinearform $b$ heißt positiv definit, wenn
+			\[
+				b(v,v) > 0
+			\]
+			für alle $v\in V$ mit $v\neq 0$ gilt.
+			(Hierbei muss die Relation $>$ im Körper sinnvoll definiert sein.)
+		\end{definition}
+
+		\subsection{Bilinearformen und Matrizen} % (fold)
+		\label{sub:bilinearformen_und_matrizen}
+		
+			Sei nun $V = K^n$ und $B=\curlb{e_1,\ldots,e_n}$ eine Basis von $V$.
+			Sei $A\in M_n(K)$. Wir setzen nun
+			\[
+				b_A(v,w) = v^TAw \in K
+			\]
+			Dann ist $b_A$ eine Bilinearform auf $V$.
+			Es gilt, wenn $A=(a_{ij})$,
+			\[
+				b(e_i,e_j) = e_i^TAe_j = a_{ij}
+			\]
+
+			\textsc{Beispiel:}\\
+			\[
+				b(\alpha,\gamma) := \alpha_1\gamma_2 - \alpha_2\gamma_1
+			\]
+			Dann ist
+			\[
+				A = \curvb{ \begin{matrix}
+					0 & 1 \\
+					-1 & 0
+				\end{matrix} }
+			\]
+			Sowohl $A$ als auch $b$ sind schiefsymmetrisch.
+
+			\begin{lemma}[Charakterisierung symmetrischer Bilinearformen]
+				Die Bilinearform $b_A$ ist genau dann symmetrisch, wenn gilt
+				\[
+					A=A^T
+				\]
+				Also wenn $A$ symmetrisch ist.
+			\end{lemma}
+			\begin{proof}
+				$\Rightarrow$:\\
+				\[
+					a_{ij} = b_A(e_i,e_j) = b(e_j,e_i) = a_{ji}
+				\]
+				$\Leftarrow$:\\
+				\[
+					b_A(v,w) = v^TAw = \curvb{v^TAw}^T = w^TA^Tv = w^TAv = b_A(w,v)
+				\]
+			\end{proof}
+
+			Betrachtet man einen Basiswechsel, so betrachtet man $\tilde{A}=CAC^T$.
+			\[
+				\tilde{b}(Cv,Cw) = \curvb{Cv}^T \tilde{A} Cw
+			\]
+			\[
+				\tilde{A} = \curvb{C^{-1}}^T A C^{-1}
+			\]
+
+			\begin{definition}[Äquivalenz Bilinearformen]
+				Zwei Bilinearformen $b_1,b_2$ heißen äquivalent, wenn es ein $C\in GL_n(K)$ gibt, sodass
+				\[
+					A_2=C^TA_1C
+				\]
+				$A_1,A_2$ beschreiben die Matrizen von $b_1,b_2$.
+			\end{definition}
+
+			\begin{corollary}[Übergangsformel]
+				Eine Bilinearform $b_A$ ist genau dann zum Standardskalarprodukt äquivalent, wenn 
+				\[
+					A=C^TC
+				\]
+				mit $C\in GL_n(K)$.
+			\end{corollary}
+
+			\begin{definition}[positiv definite Matrix]
+				Eine Matrix $A\in M_n(K)$ heißt positiv definit, falls für alle $v\in V$ mit $v\neq 0$ gilt
+				\[
+					v^TAv > 0
+				\]
+			\end{definition}
+
+			\begin{theorem}[Charakterisierung positiv definit]
+				Eine Matrix $A$ ist genau dann positiv definit, wenn $b_a$ positiv definit ist.
+			\end{theorem}
+
+			\begin{theorem}[Charakterisierung symmetrisch und positiv definite Matrix]
+				Für $A\in M_n(K)$ sind folgende Aussagen äquivalent.
+				\begin{enumerate}[label = \normalfont(\roman*)]
+					\item $A$ repräsentiert bezüglich einer geeigneten Basis das Standardskalarprodukt.
+					\item $A=C^TC$ für ein geeignetes $C\in GL_n(K)$
+					\item $A=A^T$ und $A$ ist positiv definit.
+				\end{enumerate}
+
+			\end{theorem}
+			\begin{proof}
+				(i)$\Rightarrow$(ii):\\
+				$A=C^TIC$ ist invertierbar.
+				
+				(ii)$\Rightarrow$(iii):\\
+				Gegeben sei $A=C^TC$.
+				\[
+					A^T = C^TC = A
+				\]
+				(iii)$\Rightarrow$(i):\\
+				Suchen orthonormale Basis für $A$ oder für $b_A$ mithilfe des Gram-Schmidtschen Orthogonalisierungsverfahren.
+				Danach wird eine Induktion über die Dimension durchgeführt.
+			\end{proof}
+
+			\begin{definition}[Gram-Schmidtsches Orthonormierungsverfahren]
+				Sei $B = \curlb{v_1,\ldots,v_n} \subset V$ für $n\in\SN$ eine Menge linear unabhängiger Vektoren.
+				Dann ist das Gram-Schmidtsche Orthonormierungsverfahren gerade die Abbildung, welche $B$ auf $U=\curlb{w_1,\ldots,w_n}$ abbildet, sodass für alle $i\in\SN_0$ mit $i<n$ gilt
+				\[ w_{i+1} = \frac{v_{i+1} - \sum_{k=1}^i \angleb{v_{i+1}, w_k}w_k}{\norm{v_{i+1} - \sum_{k=1}^i \angleb{v_{i+1}, w_k}w_k}} \]
+				$U$ bildet dann ein Orthonormalsystem.
+				Hierbei kann $\angleb{\cdot,\cdot}$ eine beliebige symmetrische positive definite Bilinearform darstellen.
+				$\norm{\cdot}$ stellt dann die dazu induzierte Norm dar. 
+			\end{definition}
+
+			Hier muss ein Beispiel für symmetrische positiv definite 2x2-Matrizen kommen (Charakterisierung).
+			
+
+		% subsection bilinearformen_und_matrizen (end)
+
+		\subsection{Indefinite Bilinearformen} % (fold)
+		\label{sub:indefinite_bilinearformen}
+		
+			\textsc{Beispiel:}\quad (Lorentzform)\\
+			Es gilt $V = \SR^4$ und für ein $c>0$
+			\[ b(x,y) = x_1y_1 + x_2y_2 + x_3y_3 - c^2x_4y_4 \]
+
+			\begin{lemma}
+				Sei $b$ eine nicht-triviale symmetrische Bilinearform auf $\SR^n$.
+				Dann gibt es ein $v\in\SR^n$, sodass $b(v,v)\neq 0$.
+
+			\end{lemma}
+			\begin{proof}
+				Es gilt für zwei Vektoren $u,v\in\SR^n$, dass $b(u,v)\neq 0$.
+				Ist $b(u,u)\neq 0$ oder $b(v,v)\neq 0$, dann ist die Aussage gezeigt.
+				Sonst gilt $b(u,u)=b(v,v)=0$ und für $w=u+v$ gilt dann
+				\[ b(w,w) = b(u,u) + 2b(u,v) + b(v,v) = 2b(u,v) \neq 0 \]
+			\end{proof} 
+
+			\begin{definition}[orthogonales Komplement]
+				Sei $b$ eine Bilinearform auf $V=K^n$ und $W\subset V$ ein Unterraum von $V$.
+				Das orthogonale Komplement von $W$ bezüglich $V$ ist der Unterraum
+				\[ W_b^\perp = \set{v\in V}{\forall w\in V:\ b(v,w) = 0} \]
+			\end{definition}
+
+			Es kann passieren, dass $W\cap W^\perp_b \neq \curlb{0}$.
+
+			\begin{lemma}
+				Ist $b(v,v)=0$, so gilt für $W = \angleb{v}$ (lineare Hülle), dass
+				\[ W \oplus W^\perp_b = V \]
+
+			\end{lemma}
+			\begin{proof}
+				Klar, dass $v\notin W_b^\perp$, da $b(v,v)\neq 0$.
+				Der Unterraum $W_b^\perp$ wird bestimmt mit Hilfe der linearen Gleichung $b(x,v)=0$.
+				Die Lösung dafür lautet
+				\[ u-\frac{b(u,v)}{b(v,v)}v \in W_b^\perp \]
+				Dieser Raum besitzt also die Dimension $n-1$.
+			\end{proof}
+
+			\begin{definition}[Radikal und Nicht-Entartung]
+				Seien $n\in\SN$, $K$ ein Körper und $V=K^n$ der zugehörige $n$-dimensionale $K$-Vektoraum. 
+				Sei nun $b$ eine symmetrische Bilinearform auf $V$.
+				Der Unterraum $V_b^\perp$ heißt das Radikal von $b$.
+				Die Bilinearform heißt nicht-entartet, wenn $V_b^\perp = \curlb{0}$
+			\end{definition}
+
+			\begin{lemma}
+				Sei $b=b_A$ mit $A=A^T$.
+				Dann gilt
+				\begin{enumerate}[label = \normalfont (\alph*)]
+					\item $V_b^\perp = Kern A$
+					\item $b_A$ ist nicht-entartet $\ \Leftrightarrow \ \det A \neq 0$
+				\end{enumerate}
+			\end{lemma}
+			\begin{proof}
+				(a): Es gilt nach Definition $b_A(v,w) = v^TAw$.
+				Sei $\curlb{e_1,\ldots,e_n}$ die Basis in $V$.
+				Dann falls $v^TAe_i = 0$ für alle $i$ folgt $v^TA = 0$.
+				Andererseits falls $v^TA = 0$ gilt $v^TAw = 0$ für alle $w$.
+				Nun $v^TA = (A^Tv)^T = (Av)^T$ und damit $V_b^\perp = Kern A$.\\
+				(b): es gilt $Kern A = 0 \ \Leftrightarrow \ \det A \neq 0$ 
+			\end{proof}
+
+			\begin{theorem}
+				Sei $b$ eine symmetrische Bilinearform. Dann gibt es eine Basis
+				$B=\curlb{v_1,\ldots,v_n}$, sodass die Vektoren orthogonal zueinander bezüglich $b$ stehen und $b(v_i,v_i)\in\curlb{1,-1,0}$.\\
+				Sei $A\in M_n(\SR)$ symmetrisch. Dann existiert ein $C\in GL_n(\SR)$, sodass $CAC^T$ eine Diagonalmatrix ist mit den Einträgen aus der Menge $\curlb{1,-1,0}$.
+			\end{theorem}
+			\begin{proof}
+				Sei $b$ nicht trivial.
+				Dann gibt es ein $v\in V$ mit $b(v,v)\neq 0$.
+				Setze
+				\[ v_n := \frac{v}{\sqrt{\abs{b(v,v)}}} \]
+				Zerlege nun $V$ in $V = \angleb{v_n} \oplus \angleb{v_n}_b^\perp$.
+				Die Einschränkung von $b$ auf $\angleb{v_n}_b^\perp$ ist wieder eine symmetrische Bilinearform mit Dimension $n-1$.
+				Führe nun eine Induktion durch.
+				Die Matrix $CAC^T$ hat die Gestalt
+				\[ CAC^T = \diag(\underbrace{1,\ldots,1}_{p}, \underbrace{-1,\ldots,-1}_{q},\underbrace{0,\ldots,0}_{s}) \]
+				mit $p+q+s=n$. Das Paar $(p,q)$ heißt Signatur von $b_A$.
+			\end{proof}
+
+			\begin{theorem}
+				Die Zahlen $p,q,s$ sind durch die Bilinearform $b_A$ eindeutig bestimmt.
+				Sie hängen also nicht von der Wahl der Orthogonalbasis ab.
+			\end{theorem}
+			\begin{proof}
+				$s=n-(p+q) = \dim (CAC^T) = \dim A$
+				Zeige nun das $p$ eindeutig ist.
+				Sei $B^\prime = \curlb{v_1^\prime,\ldots,v_n^\prime}$ eine andere Orthogonalbasis mit $p^\prime < p$.
+				Wir zeigen, dass die Vektoren $\curlb{v_1,\ldots, v_p, v^\prime_{p+1},\ldots, v^\prime_n}$ linear unabhängig sind.
+				Betrachte eine nicht-triviale Abhängigkeit
+				\[ \underbrace{ \alpha_1v_1 + \ldots + \alpha_pv_p }_{=:u} = \underbrace{ \gamma_{p^\prime +1}v^\prime_{p^\prime +1} + \ldots + \gamma_nv^\prime_n }_{=w} \]
+				Dann
+				\[ b(u,u) = \sum_{i=1}^p \alpha_i^2 \geq 0 \]
+				\[ b(w,w) = -\sum_{j=1}^{q^\prime} \gamma^2_{p^\prime +j} \leq 0 \]
+				\[ \sum_{i=1}^p \alpha_i^2 = \sum_{j=1}^{q^\prime} \gamma^2_{p^\prime +j} = 0 \ \Rightarrow \ \alpha_i^2 = \gamma_{p^\prime +j} = 0 \text{ für alle } i\in\curlb{1,\ldots,p}, j\in\curlb{1,\ldots,q^\prime} \]
+				Alle übrigen Koeffizienten müssen ebenfalls Null sein, da es sich um eine Basis handelt.
+				Die Vektoren sind also doch linear unabhängig.
+				Das sind insgesamt $p+n-p^\prime$ Vektoren.
+				\[ p+n-p^\prime \leq n \ \Rightarrow \ p\leq p^\prime \ \Rightarrow  \]
+				Schließlich gilt dann $p^\prime = p$
+			\end{proof}
+
+		% subsection indefinite_bilinearformen (end)
+
+	% section bilinearformen (end)
+
+	\section{Vektorräume über dem Körper $\SC$} % (fold)
+	\label{sec:der_k_rper_}
+
+		\subsection{Idee komplexes Skalarprodukt} % (fold)
+		\label{sub:idee_komplexes_skalarprodukt}
+	
+			Der Körper $\SC$ kann auch geschrieben werden als
+			\[ \SC = \SR \oplus i\SR \quad \Rightarrow \quad \dim_\SR\SC = 2 \]
+			Die Addition $+$ auf $\SC$ sei wie auf dem $\SR^2$ eingeführt.
+			Die Multiplikation für $a+ib,c+id\in\SC$ ist definiert durch
+			\[ (a+ib)(c+id) = (ac-bd) + i(ad+bc) \]
+			Es entsteht nun ein Problem, wenn man die Länge eines Vektors berechnen möchte, da die induzierte Norm im Allgemeinen nicht größer gleich Null sein wird.
+			Es gibt also $z\in\SC$ mit
+			\[ \angleb{z,z} = zz \not\geq 0 \]
+			Um dieses Problem zu umgehen, möchte man, dass die Länge in $\SC$ sich gerade aus der Länge in $\SR$ ergibt.
+			Man führt ein neues Skalarprodukt, welches positiv definit ist und gerade die Norm aus dem $\SR$ beibehält.
+			\[ \angleb{z,z}_\SC := \bar{z}z = \abs{z}^2 \geq 0 \]
+			Aufgrund dieser Betrachtung erhält man nun eine Idee für ein neues Skalarprodukt auf dem $\SC^n, n\in\SN$, welches die Länge erhält.
+
+		% subsection idee_komplexes_skalarprodukt (end)
+	
+		\subsection{Hermitesche Formen} % (fold)
+		\label{sub:hermitesche_formen}
+
+			\begin{definition}[hermitisches Standardskalarprodukt]
+				Sei $n\in\SN$.
+				Die folgende Abbildung stellt das hermitesche Standardskalarprodukt auf dem $\SC^n$ dar.
+				\[ \angleb{\cdot,\cdot}_\SC:\SC^n\times\SC^n\longrightarrow\SC,\qquad \angleb{x,y}_\SC = \angleb{\bar{x},y} = \bar{x}\transp y \]
+				Im Folgenden wird diese Abbildung auch Skalarprodukt auf $\SC^n$ genannt oder als $\angleb{\cdot,\cdot}$ geschrieben.
+			\end{definition}
+
+			Es ist nun angebracht eine Verallgemeinerung für das hermitesche Standardskalarprodukt analog zu den Bilinearformen zu konstruieren.
+			Dafür betrachtet man die grundlegendsten Eigenschaften des Skalarproduktes. 
+
+			\begin{definition}[Sesquilinearform]
+				Seien $V$ ein $\SC$-Vektorraum und eine Abbildung $s:V\times V\longrightarrow \SC$ gegeben.
+				Dann ist $s$ eine Sesquilinearform genau dann, wenn für alle $\alpha,\beta\in\SC$ und alle $u,v,w\in V$ gilt
+				\begin{enumerate}[label = \normalfont (S\arabic*)]
+					\item $s(u, \alpha v + \beta w) = \alpha s(u,v) + \beta s(u,w) \hfill \text{(Linearität)}$
+					\item $s(\alpha u + \beta v, w) = \bar{\alpha} s(u,w) + \bar{\beta}s(v,w) \hfill \text{(Semilinearität)}$
+				\end{enumerate}
+			\end{definition}
+
+			Hier wird gefordert, dass die Linearität im zweiten Argument und die Semilinearität im ersten Argument gilt.
+			Es ist allerdings auch gebräuchlich dies in umgekehrter Weise zu definieren.
+
+			\begin{definition}[hermitesche Form]
+				Eine hermitesche Form auf einem $\SC$-Vektorraum $V$ ist eine Sesquilinearform $H:V\times V\longrightarrow\SC$, sodass für alle $x,y\in V$ gilt
+				\[ H(x,y) = \overline{H(y,x)} \hfill \text{(hermitesche Symmetrie)} \]
+				Eine hermitesche Form wird auch hermitesches Skalarprodukt oder auch hermitesche Sesquilinearform genannt.
+			\end{definition}
+
+			Damit ist $\angleb{\cdot,\cdot}$ eine hermitesche Form auf dem $\SC^n$.
+			Eine der im Folgenden betrachten Haupteigenschaften von solchen durch Matrizen induzierten Formen wird die Hermitizität oder auch hermitesche Symmetrie sein.
+
+			\begin{definition}[hermitesche Matrix]
+				Sei $A\in\m{M}_n(\SC)$ für ein $n\in\SN$.
+				Dann ist $A$ hermitesch genau dann, wenn
+				\[ \bar{A} = A\transp \]
+				Hierbei ist $\bar{A} := (\bar{a}_{ij})$ die komplex konjugierte Matrix zu $A$.
+				Es sei weiterhin $A^\dagger := \bar{A}\transp$.
+			\end{definition}
+
+			Das Analogon einer orthogonalen Matrix für hermitesche Formen ist die unitäre Matrix.
+
+			\begin{definition}[unitäre Matrix, $\m{U}_n$]
+				Sei $n\in\SN$.
+				Ein $C\in\m{M}_n(\SC)$ heißt unitär genau dann, wenn
+				\[ C^\dagger C = \idmat \]
+				Damit bleibt das Standardskalarprodukt erhalten.
+				Die Menge der unitären Matrizen sei dann
+				\[ \m{U}_n := \set{A\in \m{M}_n(\SC)}{ A^\dagger A = \idmat } \]
+			\end{definition}
+
+			Gilt $A\in\m{M}_n(\SR)$, dann ist orthogonal äquivalent zu unitär.
+			Analoges gilt für hermitesche und symmetrische Matrizen.
+			Für die Übergangsformel gilt
+			\[ \tilde{A} = C^\dagger A C \]
+
+			\begin{lemma}[$\m{U}_n$ bildet Gruppe]
+				$\m{U}_n$ bildet für $n\in\SN$ bezüglich der Matrixmultiplikation eine Gruppe.
+			\end{lemma}
+			\begin{proof}
+				Klar.
+			\end{proof}
+
+			Analog lässt sich auch die Orthogonalität von Vektoren übertragen.
+			Diese wird vor Allem gebraucht, um Orthonormalbasen im komplexen Vektorraum zu definieren.
+
+			\begin{definition}[Orthogonalität komplexer Vektoren]
+				Sei $V$ ein $\SC$-Vektorraum und $H:V\times V\longrightarrow\SC$ eine hermitesche Form auf $V$.
+				Dann stehen zwei Vektoren $v,w\in V$ orthogonal zueinander genau dann, wenn 
+				\[ H(v,w) = 0 \]
+				In diesem Falle schreibt man auch $v\perp_H w$ oder auch nur $v\perp w$.
+			\end{definition}
+
+			Für das vollständige Konzept einer Orthonormalbasis wird nun noch eine analoge Eigenschaft zur positiv Definitheit benötigt, um so die Normierung von Vektoren zu ermöglichen.
+
+			\begin{definition}[positiv definite hermitesche Form]
+				Sei $V$ ein $\SC$-Vektorraum und $H:V\times V\longrightarrow\SC$ eine hermitesche Form auf $V$.
+				$H$ heißt positiv definit, wenn für alle $v\in V\setminus\curlb{0}$ gilt
+				\[ H(v,v) > 0 \]
+				Diese Eigenschaft ist wohldefiniert, da $H(v,v) = \overline{H(v,v)}$ und damit $H(v,v)\in\SR$ folgt.
+			\end{definition}
+
+			Diese Eigenschaft lässt sich so nur für hermitesche Formen formulieren.
+			Dies war bei positiv definiten Bilinearformen nicht der Fall.
+
+			\begin{theorem}[Charakterisierung positiv Definitheit]
+				Eine hermitesche Form $H$ ist genau dann positiv definit, wenn es eine Orthonormalbasis bezüglich $H$ gibt.
+			\end{theorem}
+
+			\begin{theorem}[Spektralsatz]
+				Sei $V$ ein $\SC$-Vektorraum.
+				\begin{enumerate}[label = \normalfont (\alph*)]
+					\item Sei $f:V\longrightarrow V$ eine hermitesche lineare Abbildung.
+						Dann gibt es eine Orthonormalbasis von $V$, die aus Eigenvektoren von $f$ zu reellen Eigenwerten besteht.
+
+					\item Sei eine hermitesche Matrix $M$ gegeben.
+						Dann gibt es ein $C\in\m{U}_n$, sodass
+						\[ C^\dagger MC \in\m{M}_n(\SR) \]
+						eine Diagonalmatrix ist.
+				\end{enumerate}
+			\end{theorem}
+			\begin{proof}
+				(a):
+				Wir benutzen, dass $\SC$ algebraisch abgeschlossen ist (siehe Algebra II).
+				Sei
+				\[ \chi_M := \det (X\idmat - M) \]
+				das charakteristische Polynom zu $M$.
+				Dieses Polynom besitzt komplexe Koeffizienten.
+				Aufgrund der algebraischen Abgeschlossenheit folgt dann 
+			\end{proof}
+
+			Der Spektralsatz begründet noch einmal, weshalb man ein neues Skalarprodukt für Vektorräume über den komplexen Zahlen konstruiert.
+			Diese Betrachtung ermöglicht es nun hermitesche Matrizen zu diagonalisieren.
+
+			\begin{corollary}[hermitesche Matrizen sind diagonlisierbar]
+				Jede hermitesche Matrix ist diagonalisierbar.
+			\end{corollary}
+
+			\begin{theorem}
+				Seien $H$ eine hermitesche Form auf einem $\SC$-Vektorraum $V$ und $M$ die zugehörige Matrix.
+				Dann sind alle Eigenwerte von $M$ reell, das heißt
+				\[ \lambda(M)\subset\SR \]
+				Außerdem gibt es ein $C\in\m{U}_n$, sodass $C^\dagger M C$ Diagonalform hat und $\SR\subset\SC$ als ein Teilkörper abgeschlossen ist.
+			\end{theorem}
+
+			\begin{corollary}
+				Sei $A\in\m{M}_n(\SR)$ für $n\in\SN$ hermitesch.
+				Dann sind alle Eigenwerte von $A$ reell und $A$ ist in $\m{M}_n(\SC)$ diagonalisierbar.
+			\end{corollary}
+
+			Seien $A\in\m{M}_n(\SR)$, $\lambda\in\SC$ ein Eigenwert von $A$ und $v_\lambda\in\SC^n$ ein zugehöriger Eigenvektor.
+			Dann folgt 
+			\[ \lambda\in\SR \quad \equivalent \quad v_\lambda \in \SR \]
+
+			Warum besitzt nun eine symmetrische reelle Matrix einen reellen Eigenwert?
+			Dies ist eigentlich eine Frage der Analysis.
+			Sei $n\in\SN$.
+			Es ist dann
+			\[ S^{n-1} := \set{v\in\SR^n}{\angleb{v,v}=1} \]
+			eine kompakte Teilmenge des $\SR^n$.
+			Sei nun $A\in\m{M}_n(\SR)$ eine symmetrische Matrix.
+			\[ F_A:\SR^n \longrightarrow \SR,\qquad F_A(v):=v\transp A v \]
+			$F_A$ ist nun eine stetige kontinuierliche Funktion.
+			$F_A|_{S^{n-1}}$ ist also begrenzt und die nimmt maximale und minimale Werte an.
+			Sei $L$ nun ein maximaler Wert.
+			\[ L=F_A(v_0),\qquad v_0\transp v_0 = 1 \]
+			\[ \diff F_A(v_0) \text{ ist Null auf } T_{v_0}S^{n-1} \]
+			Das heißt also, dass für alle $w\in\SR^n$
+			\[ w\transp Av_0 + v_0\transp Aw = 0 \quad \implies \quad w\transp v_0 = 0 \]
+			\[ \implies \quad v_0\transp Aw = 0 \quad \implies \quad v_0^\perp \subset (Av_0)^\perp \quad \implies \quad \angleb{Av_0}\subset\angleb{v_0} \]
+			\[ Av_0 \in \set{rv_0}{r\in\SR} \]
+			$v_0$ ist also ein Eigenvektor von $A$.
+			Wenn nun $Av_0 = rv_0$, dann folgt
+			\[ \implies \quad F_A(v_0) = L = r \]
+
+			\begin{theorem}[Spektralsatz im reellen Fall]
+				Sei $n\in\SN$.
+				\begin{enumerate}[label = \normalfont (\alph*)]
+					\item Sei $f:\SR^n\longrightarrow\SR^n$ eine lineare Abbildung mit $angleb{f(v),w} = \angleb{v,f(w)}$ für alle $v,w\in\SR^n$.
+						Dann existiert eine Orthonormalbasis in $\SR^n$, wo alle Vektoren Eigenvektoren von $f$ sind.
+						Alle Eigenvektoren von $f$ sind reell und $f$ ist diagonalisierbar.
+					\item Sei $A\in\m{M}_n(\SR)$ symmetrisch.
+						Dann existiert ein $C\in\m{O}_n$, sodass $C\transp AC$ eine Diagonalmatrix ist.
+				\end{enumerate}
+
+			\end{theorem}
+			\begin{proof}
+				Es sei hier $f(v)=Av$.
+				$f$ ist damit auch symmetrisch (da es selbstadjungiert ist).
+				Die beiden getroffenen Aussagen sind äquivalent.
+
+				(a)$\implies$(b):\\
+				zu zeigen: Es gibt ein $C\in\m{O}_n$, sodass $C\transp A C = \diag (\lambda_1,\ldots,\lambda_n)$.
+				Es gibt ein $v\in\SR^n$ mit $Av=\lambda v$ für $\lambda\in\SR$ mit $v\neq 0$.
+				\[ v_1 := \frac{v}{\norm{v}},\qquad \norm{v}=\sqrt{v\transp v}> 0 \]
+				\[ \SR^n = \angleb{v_1}\oplus v^\perp \]
+				Aus $\angleb{v,f(w)}=\angleb{f(v),w}=\angleb{\lambda v, w}$ folgt es, dass $v^\perp$ stabil ist.
+				\[ \angleb{v,w}=0 \quad \implies \quad \angleb{v,f(w)}=0 \]
+				Die Induktion über $n$ bringt uns dann eine Orthonormalbasis.
+			\end{proof}
+
+			\textsc{Beispiel:}\\
+			Sei $n=2$ und
+			\[ A = \begin{pmatrix}
+				a & b \\ b & d
+			\end{pmatrix},\qquad \chi_A(x) := (x-a)(x-b) - b^2 \]
+			Die Nullstellen liegen hier in $\SR$, wie man sich durch eine Parabel leicht veranschaulichen kann.
+
+		% subsection hermitesche_formen (end)
+
+		\subsection{Schiefsymmetrische Bilinearformen} % (fold)
+		\label{sub:schiefsymmetrische_bilinearformen}
+		
+			Im Körper $\mathds{F}_2$ ist $2=0$ und damit auch $-1=1$.
+			Führt man eine Bilinearform $b$ auf einem $\mathds{F}_2$-Vektorraum ein, so bedeutet Schiefsymmetrie nichts weiter als
+			\[ b(v,w) = -b(w,v) = b(w,v) \]
+			$b$ wäre also auch symmetrisch.
+			Um dieses Problem zu umgehen, führt man eine etwas abgewandelte Definition ein.
+
+			\begin{definition}[schiefsymmetrische Bilinearformen]
+				Sei $n\in\SN$.
+				Eine Bilinearform $b$ auf $V=K^n$, wobei $K$ ein Körper ist, heißt schiefsymmetrisch, falls für alle $v\in V$ gilt
+				\[ b(v,v) = 0 \]
+			\end{definition}
+
+			Hierbei muss das Folgende beachtet werden.
+			\[ 0 = b(v+w,v+w) = b(v,v) + b(v,w) + b(w,v) + b(w,w) = b(v,w) + b(w,v) \]
+			\[ \implies \quad b(v,w) = -b(w,v) \]
+			Die oben geforderte Eigenschaft bedeutet also gerade Schiefsymmetrie.
+			Für einen Körper $K$, indem $0\neq 2$ gilt, folgt dann auch
+			\[ b(v,w) = -b(w,v) \quad \implies \quad b(v,v)=-b(v,v) \quad \implies \quad b(v,v) = 0 \]
+			Sei $b = b_A$ schiefsymmetrisch.
+			Dann gilt $A\transp = -A$ und damit auch $a_{ii}=0$ für alle $i\in\SN, i\leq n$.
+			\[ v \perp_b w \quad \implies \quad b(v,w) = 0 \]
+			\[ b(v,w) = 0 \quad \equivalent \quad b(w,v) = 0 \]
+			\[ b \text{ nicht entartet} \quad \equivalent \quad \set{v}{b(v,w)=0} = \curlb{0} \quad \equivalent \quad \det A \neq 0 \]
+
+		% subsection schiefsymmetrische_bilinearformen (end)
+
+	% section der_k_rper_ (end)
+
+	\subsection{Der orientierte Winkel} % (fold)
+	\label{sub:der_orientierte_winkel}
+	
+		Seien $v,w\in\SR^2\setminus\curlb{0}$ linear unabhängig und $\gamma:=\angle_\pm(v,w)$.
+		\[ \cos\gamma := \begin{cases} \cos\angle(v,w) & :\det(v,w)>0 \\ -\cos\angle(v,w) & :\mathrm{sonst} \end{cases} \]
+
+	% subsection der_orientierte_winkel (end)
+
+	\subsection{Kreuzprodukt} % (fold)
+	\label{sub:kreuzprodukt}
+	
+		\begin{definition}[Kreuzprodukt]
+			Das Kreuzprodukt ist eine bilineare Verknüpfung $\times:\SR^3\times\SR^3\longrightarrow\SR^3$, sodass für alle $v,w,u\in\SR^3$ gilt
+			\begin{enumerate}[label=\normalfont(K\arabic*)]
+				\item $v\times w = -w\times v$ \hfill (alternierend)
+				\item $(v,w,u)\in\m{SO}_3 \quad \implies \quad v\times w = u$
+			\end{enumerate}
+		\end{definition}
+
+		\begin{theorem}[Existenz und Formel des Kreuzprodukts]
+			Das Kreuzprodukt existiert und ist für $v,w\in\SR^3$ durch die folgende Formel eindeutig bestimmt.
+			\[
+				v\times w =
+				\begin{pmatrix}
+					v_1 \\ v_2 \\ v_3
+				\end{pmatrix}
+				\times
+				\begin{pmatrix}
+					w_1 \\ w_2 \\ w_3
+				\end{pmatrix}
+				=
+				\begin{pmatrix}
+					v_2w_3 - v_3w_2 \\
+					v_3w_1 - v_1w_3 \\
+					v_1w_2 - v_2w_1
+				\end{pmatrix}
+			\]
+		\end{theorem}
+		\begin{proof}
+			Es sei $\transp{(c_1,c_2,c_3)}:=v\times w$.
+			\[ \implies \quad \det(v,w,v\times w) = c_1^2 + c_2^2 + c_3^2 = \norm{v\times w}^2 \]
+			Wir betrachten nun
+			\[ \angleb{v\times w, v} = \det(v,w,v) = 0 = \det(v,w,w) = \angleb{v\times w, w} \]
+			Sei jetzt $(v,w,u)\in\m{SO}_3$.
+			\[ \norm{v\times w}^2 = \det(v,w,v\times w) = 1 \]
+
+			Eindeutigkeit:
+			\begin{alignat*}{3}
+				v\times w &= \sum_{i,j=1}^3 x_iy_j e_i\times e_j
+				= \sum_{\substack{i,j=1 \\ i\neq j}}^3 x_iy_j e_i\times e_j
+				= \sum_{\substack{i,j=1 \\ i < j}}^3 (x_iw_j - x_jw_i) e_i\times e_j
+			\end{alignat*}
+		\end{proof}
+
+		(geometrische Bedeutung einfügen)
+
+	% subsection kreuzprodukt (end)
+
+	\section{Jordansche Normalform} % (fold)
+	\label{sec:jordansche_normalform}
+	
+		\begin{definition}[Hauptraum von $f$ zu $\lambda$]
+			Seien $K$ ein Körper, $V$ ein $K$-Vektorraum und $f\colon V\funcarr V$ eine lineare Abbildung.
+			Für ein $\lambda\in K$ heißt die folgende Menge der Hauptraum von $f$ zu $\lambda$.
+			\[ \m{Hau}(f,\lambda) := \set{v\in V}{ \exists n\in\SN:\quad (f-\lambda\id_V)^n(v) = 0 } \]
+		\end{definition}
+
+		\begin{lemma}[Hauptraum ist Unterraum]
+			Seien $K$ ein Körper, $V$ ein $K$-Vektorraum, $f\colon V\funcarr V$ eine lineare Abbildung und $\lambda\in K$.
+			Dann ist $\m{Hau}(f,\lambda)$ ein linearer Unterraum von $V$.
+		\end{lemma}
+		\begin{proof}
+			Es ist $\m{Hau}(f,\lambda) \neq \emptyset$, da $0\in\m{Hau}(f,\lambda)$.
+			Seien $v,w\in\m{Hau}(f,\lambda)$ und $\alpha\in K$, dann gibt es $n,m\in\SN$, sodass
+			\[ (f-\lambda\id)^n(v) = (f-\lambda\id)^m(w) = 0 \]
+			Setzt man nun $p:=\max\curlb{n,m}$, folgt
+			\[ (f-\lambda\id)^p(v+\alpha w) = (f-\lambda\id)^p(v) + \alpha(f-\lambda\id)^p(w) = 0 \]
+			\[ \implies \quad v+\alpha w \in \m{Hau}(f,\lambda) \]
+		\end{proof}
+
+		\begin{lemma}[Charakterisierung nicht-trivialer Hauptraum]
+			Seien $K$ ein Körper, $V$ ein $K$-Vektorraum, $f\colon V\funcarr V$ eine lineare Abbildung und $\lambda\in K$.
+			\[ \m{Hau}(f,\lambda) \neq \curlb{0} \quad \equivalent \quad \lambda \in \sigma(f) \]
+		\end{lemma}
+		\begin{proof}
+			$\Longleftarrow$:
+			Sei $\lambda$ ein Eigenwert von $f$.
+			In diesem Fall gibt es ein $v\in V$ mit $f(v)=\lambda v$.
+			Damit gilt dann auch 
+			\[ (f-\lambda\id)(v) = 0 \quad \implies \quad v\in\m{Hau}(f,\lambda) \]
+
+			$\implies$:
+			Sei nun $v\in\m{Hau}(f,\lambda)$ mit $v\neq 0$.
+			Sei nun $n\in\SN$ die kleinste Zahl mit
+			\[ 0 = (f-\lambda\id)^n(v) \]
+			Ist $n=1$, folgt direkt, dass $\lambda$ ein Eigenwert ist.
+			Für $n>1$ definiert man
+			\[ u:= (f-\lambda\id)^{n-1}(v) \neq 0 \quad \implies \quad (f-\lambda\id)(u) = 0 \]
+			$u$ ist damit ein Eigenvektor zum Eigenwert $\lambda$.
+		\end{proof}
+
+		\begin{definition}[nilpotenter Endomorphismus]
+			Seien $K$ ein Körper und $V$ ein $K$-Vektorraum.
+			Eine lineare Abbildung $\func{f}{V}{V}$ heißt nilpotent, wenn es ein $n\in\SN$ gibt, sodass
+			\[ f^n = 0 \]
+			Analoges sei für die zugehörige Matrix definiert.
+		\end{definition}
+
+		\begin{theorem}[Charakterisierung nilpotente Abbildung]
+			Seien $K$ ein Körper und $V=K^n$ für ein $n\in\SN$.
+			Für einen Endomorphismus $\func{f}{V}{V}$ mit der zugehörigen Matrix $A\in\m{M}_n(K)$ sind folgende Aussagen äquivalent.
+			\begin{enumerate}[label=\normalfont(\roman*)]
+				\item $f$ ist nilpotent
+				\item $\m{Hau}(f,0)=V$
+				\item $A$ ist triagonalisierbar und alle Eigenwerte sind Null.
+			\end{enumerate}
+		\end{theorem}
+		\begin{proof}
+			(iii)$\equivalent$(i) wurde bereits in Linearer Algebra I gezeigt.
+
+			(i)$\implies$(ii):
+			Ist $f$ nilpotent, dann gibt es ein $k\in\SN$, sodass für alle $v\in V$ gilt
+			\[ f^k(v)=0 \quad \implies \quad v\in\m{Hau}(f,0) \]
+			Damit folgt direkt $\m{Hau}(f,0) = V$, da $\m{Hau}(f,0)\subset V$.
+
+			(ii)$\implies$(i):
+			Sei nun also $\m{Hau}(f,0)=V$.
+			Dann gibt es für alle $v\in V$ ein $k_v\in\SN$, sodass $f^{k_v}(v)=0$ gilt.
+			Setze nun
+			\[ \tilde{k} := \max\set{k_v}{v\in V} \]
+			Sei nun $v\in V$.
+			\begin{itemize}
+				\item Fall $k_v=\tilde{k}$:\\
+					Aus der Definition ergibt sich direkt $f^{\tilde{k}}(v) = 0$.
+				\item Fall $k_v<\tilde{k}$:\\
+					Es gibt nun ein $m\in\SN$, sodass $\tilde{k}=k_v+m$.
+					Dafür folgt nun
+					\[ f^{\tilde{k}}(v) = f^{m+k_v}(v) = f^m\curvb{ f^{k_v}(v) } = f^m(0) = 0 \]
+			\end{itemize}
+			Die Funktion $f$ ist also nilpotent.
+		\end{proof}
+
+		\begin{lemma}[Hauptraum ist stabil unter kommutierenden Abbildungen]
+			Seien $K$ ein Körper, $V$ ein $K$-Vektorraum und $\func{f,h}{V}{V}$ lineare Abbildungen, welche kommutieren (das heißt $f\circ h = h\circ f$).
+			Dann ist für alle $\lambda\in K$
+			\[ h\curvb{ \m{Hau}(f,\lambda) } \subset \m{Hau}(f,\lambda) \]
+			$\m{Hau}(f,\lambda)$ heißt dann auch $h$-stabil.
+		\end{lemma}
+		\begin{proof}
+			Aus Rechenregeln ergibt sich
+			\[ h\circ (f-\lambda\id) = h\circ f - \lambda h = f\circ h - \lambda h = \curvb{ f - \lambda\id }\circ h \]
+			\[ \implies \quad h\circ (f-\lambda\id)^k = (f-\lambda\id)^k\circ h \qquad \text{für } k\in\SN \]
+			Sei nun $v\in\m{Hau}(f,\lambda)$. Dann gibt es ein $k\in\SN$, sodass
+			\[ (f-\lambda\id_V)^k(v) = 0 = h\circ\curvb{f-\lambda\id_V}^k(v) = (f-\lambda\id_V)^k(h(v)) \]
+			\[ \implies \quad h(v)\in\m{Hau}(f,\lambda) \]
+		\end{proof}
+
+		\begin{corollary}[Hauptraum ist stabil unter eigener Abbildung]
+			Seien $K$ ein Körper, $V$ ein $K$-Vektorraum und $\func{f}{V}{V}$ eine lineare Abbildungen.
+			Für alle $\lambda\in K$ ist $\m{Hau}(f,\lambda)$ ein $f$-stabiler Unterraum.
+		\end{corollary}
+
+		\begin{theorem}[Haupträume als direkte Summe]
+			Seien $K$ ein Körper und für ein $r\in\SN$ die paarweise verschiedenen Werte $\lambda_1,\ldots,\lambda_r\in K$ gegeben.
+			Dann gilt
+			\[ \sum_{i=1}^r \m{Hau}(f,\lambda_i) = \bigoplus_{i=1}^r \m{Hau}(f,\lambda_i) \]
+		\end{theorem}
+		\begin{proof}
+			Man führt hier eine Induktion über $r$ durch.
+			Für $r=1$ gibt es nichts zu zeigen.
+
+			$r\implies r+1$:
+			Wir nehmen an, dass
+			\[ S:=\m{Hau}(f,\lambda_{r+1}) \cap \sum_{i=1}^r \m{Hau}(f,\lambda_i) \neq \curlb{0} \]
+			Man findet also einen Vektor $u\in S$ mit $u\neq 0$.
+			Dann gibt es eindeutige $v_i\in\m{Hau}(f,\lambda_i)$ für $i\in\SN,i\leq r$ und ein kleinstes $n\in\SN$ mit
+			\[ u = \sum_{i=1}^r v_i,\qquad h(u):=(f-\lambda_{r+1}\id)^n(u)=0 \]
+			\[ \implies \quad 0 = h(u) = h\curvb{\sum_{i=1}^r v_i} = \sum_{i=1}^r h(v_i) \]
+			Da die Summe der ersten $r$ Haupträume direkt ist muss $h(v_i)=0$ sein für alle $i\in\SN,i\leq r$.
+			Es gibt nun ein $i\in\SN,i\leq r$, sodass $v_i\neq 0$ und der folgende Vektor ein Eigenvektor von $f$ zum Eigenwert $\lambda_{r+1}$ ist.
+			\[ \tilde{h}(v_i) := (f-\lambda_{r+1}\id)^{n-1}(v_i) \neq 0 \]
+			Weiterhin gibt es ein kleinstes $k\in\SN$ mit
+			\[ g(v_i) := (f-\lambda_i\id)^k(v_i) = 0 \quad \implies \quad \tilde{g}(v_i):=(f-\lambda_i\id)^{k-1}(v_i)\neq 0 \]
+			$\tilde{g}(v_i)$ stellt also auch einen Eigenvektor von $f$ zum Eigenwert $\lambda_i$ dar.
+			Man macht sich leicht klar, dass $h,\tilde{h},g,\tilde{g}$ kommutierende Abbildungen sind.
+			Aus diesem Grund ist
+			\[ \tilde{h}\circ\tilde{g}(v_i) = \tilde{g}\circ\tilde{h}(v_i) \]
+		\end{proof}
+
+		\begin{theorem}[Fitting-Zerlegung]
+			Seien $K$ ein Körper, $V=K^n$ für ein $n\in\SN$ und $\func{f}{V}{V}$ eine lineare Abbildung.
+			Dann besitzt $\m{Hau}(f,0)$ stets genau ein $f$-stabiles Komplement $U$.
+			\[ V = \m{Hau}(f,0)\oplus U \] 
+		\end{theorem}
+		\begin{proof}
+			
+		\end{proof}
+
+
+		\begin{definition}[nilpotente Jordan-Block der Größe $r$]
+			Sei $r\in\SN$.
+			Dann sei der nilpotente Jordan-Block der Größe $r$ durch eine $r\times r$-Matrix $J(r)\in\m{M}_r(\SR)$ definiert, sodass für alle $i,j\in\SN$ mit $i,j\leq r$ gilt
+			\[ J(r)_{ij} = \delta_{i+1\, j} \]
+		\end{definition}
+
+		\textsc{Beispiel:}\\
+		\[
+			J(1) = 0,\qquad
+			J(2) =
+			\begin{pmatrix}
+				0 & 1 \\
+				0 & 0 \\
+			\end{pmatrix}
+			,\qquad J(3) =
+			\begin{pmatrix}
+				0 & 1 & 0 \\
+				0 & 0 & 1 \\
+				0 & 0 & 0
+			\end{pmatrix}
+		\]
+
+
+		\begin{theorem}[Normalform nilpotenter Abbildungen]
+			Seien $K$ ein Körper und $V$ ein Vektorraum mit $V=K^n$ für $n\in\SN$.
+			Sei $f:V\longrightarrow V$ eine nilpotente lineare Abbildung.
+			Dann gibt es eine Basis $B$ von $V$, sodass 
+			\[ \boxb{f} = \diag{J(r_1),\ldots,J(r_t)} \]
+			Die Zahlen $r_1,\ldots,r_n$ sind hierbei von $f$ eindeutig bis auf ihre Reihenfolge bestimmt.
+		\end{theorem}
+		\begin{proof}
+			Eindeutigkeit:
+			\[ t = \dim(\ker f) \]
+			\[ f(e_i) = 0 \quad \implies \quad i=1 \text{ oder } i = 1+r_1 \text{ oder } i = 1 + r_1 +\ldots +r_s \]
+			mit $s< t$.
+			\[ \dim(\ker f) \geq t \]
+			\[ \dim(\im f) \geq \dim V - t \]
+			\[ \im f = \angleb{e_i \vert 1\leq i\leq n} \]
+			\[ e_j = f(e_i) \quad \equivalent \quad i\notin\curlb{r_1,r_1+r_2,\ldots,r_1+\ldots+r_t} \]
+		\end{proof}
+
+		\begin{corollary}
+			Seien $A,B\in\m{M}_n(K)$ nilpotent.
+			Dann existieren $r_1,\ldots,r_t$, sodass
+			\[ A\sim\diag(J(r_1),\ldots,J(r_t)) \]
+			\[ A\sim B\quad \equivalent \quad B\sim\diag(J(r_1),\ldots,J(r_t)) \]
+		\end{corollary}
+
+		\begin{lemma}
+			Sei $f:V\longrightarrow V$ nilpotent mit $\dim V < \infty$.
+			Dann existiert eine Basis $B$ von $V$, sodass $B\cup \curlb{0}$ stabil ist und jedes Element von $B$ unter $f$ höchstens ein Urbild in $B$ hat.
+		\end{lemma}
+		\begin{proof}
+			Sei $B$ eine Basis des Lemmas von $f$.
+			Nicht jedes Element von $B$ hat ein Urbild unter $f$ in $B$.
+			($f$ wäre sonst nicht nilpotent).
+			Wir sehen auch, dass es für alle $b\in B$ ein $b^\prime\in B$ und ein $k\geq 0$ gibt, sodass $b^\prime$ kein Urbild in $B$ hat und $b=f^k(b^\prime)$.
+			$B$ zerfällt in Ketten unter $f$.
+			Jede dieser Ketten entspricht dann einem Jordan-Block $J(r_i)$ der jeweiligen Größe $r_i$.
+
+			Führe eine Induktion über die die Dimension des Vektorraums durch.
+			\[ \im f \subset V \]
+			\[ f \text{ nilpotent} \quad \implies \quad \ker f \neq \curlb{0} \quad \implies \quad \im f\neq V \]
+			$\dim(\im f)\leq \dim V$.
+			$\im f$ ist ein $f$-stabiler Unterraum.
+			\[ \implies \quad \im f \text{ hat eine Jordan-Basis } J \]
+			\[ \angleb{B_0}\oplus\curvb{ \im f \cap \ker f } = \ker f \]
+		\end{proof}
+
+		\begin{definition}[Jordan-Basis]
+			Die Basis des vorherigen Lemmas wird auch Jordan-Basis von $f$ genannt.
+		\end{definition}
+
+		\begin{lemma}[Jedes $f$ besitzt eine Jordan-Basis]
+			Eine Jordan-Basis existiert für alle linearen Abbildungen $f\colon V \funcarr V$.
+		\end{lemma}
+		\begin{proof}
+			Führe hier eine Induktion über $n$ aus.
+			Falls $n=0$ oder $n=1$ ist jede Basis von $V$ eine Jordan-Basis.
+			\[ \ker f \neq \curlb{0} \quad \implies \quad \dim(\im f)<n \]
+			$\im f$ ist ein $f$-stabiler Unterraum.
+			$\im f$ besitzt eine Jordan-Basis $\mathcal{J}$ von $f$.
+			\[ \mathcal{J}_0 := \set{t\in\mathcal{J}}{f(t)=0} \]
+			$\mathcal{J}_0$ ist eine Basis von $ \im f \cap \ker f $.
+			Sei $ \mathcal{J}_0 \cup B_0 $ eine Basis von $\ker f = (\ker f\cap \im f)\oplus\angleb{B_0}$.
+			$f(\mathcal{J}) \subset \mathcal{J}\cup\curlb{0} $ weil $\mathcal{J} $ eine Jordan-Basis ist.
+			Seien $s_1,\ldots,s_r\in\mathcal{J}$ genau die Elemente, die nicht in $f(\mathcal{J})$ liegen.
+			Jedes Element $s_i$ liegt in $\im f$ (das heißt $s_i$ hat ein Urbild $b_i\in V$).
+			\[ B:= \curlb{ b_1,\ldots,b_r }\cup B_0 \cup \mathcal{J} \]
+			Wir zeigen, dass $B$ eine Basis von $V$ und dass $B$ eine Jordan-Basis ist.
+			\[ B=(B_0 \sqcup \mathcal{J}_0)\sqcup \curvb{ \curlb{b_1,\ldots,b_r}\sqcup \set{t\in\mathcal{J}}{ f(t)\neq 0 } } \]
+			$f(B)\setminus \curlb{0}$ ist eine Basis von $\im f$.
+			Es folgt, dass $B$ linear unabhängig ist und dass $\#B=\dim V$.
+			Hier fehlt noch was.
+		\end{proof}
+
+		\begin{proposition}
+			Wenn $A^n=$ für $A\in\m{M}_n(K)$, dann
+			\[ A\sim \diag(J(r_1),\ldots,J(r_m)) \]
+		\end{proposition}
+
+		\begin{proposition}[Eigenschaften]
+			Seien $A,B\in\m{M}_n(\SC)$ für ein $n\in\SN$.
+			\begin{enumerate}[label=\normalfont(\alph*)]
+				\item Sei $C\in\m{Gl}_n(\SC)$. Dann gilt
+					\[ \exp(CA\inv{C}) = C\exp(A)\inv{C} \]
+				\item 
+					\[ AB=BA \quad \implies \quad \exp(A+B)=\exp(A)\exp(B) \]
+				\item Sei $A=A_s + A_{nl}$ die Jordan-Zerlegung von $A$.
+					Hier ist $A_s$ diagonalisierbar, $A^n_{nl}=0$ und $A_sA_{nl}=A_{nl}A_s$.
+					\[ A_s\sim \diag(\gamma_1,\ldots,\gamma_n),\qquad \exp(A_s)\sim \diag(e^{\gamma_1},\ldots,e^{\gamma_n}) \]
+					\[ \exp(A) = \exp(A_s)\exp(A_{nl}) \]
+					\[ A_{nl} = \diag(J(r_1),\ldots,J(r_m)) \]
+					\[ \exp(A_{nl}) = \diag(\exp(J(r_1)),\ldots,\exp(J(r_m))) \]
+			\end{enumerate}
+		\end{proposition}
+		\begin{proof}
+			(a): Es gilt für ein $k\in\SN$
+			\[ \curvb{CA\inv{C}}^k = CA^k\inv{C} \]
+			(b): Direktes Rechnen.
+		\end{proof}
+
+		\begin{theorem}[Cayley-Hamilton]
+			Sei $A\in\m{M}_n(\SC)$ für ein $n\in\SN$.
+			Dann gilt
+			\[ \chi_A(A) = 0 \]
+		\end{theorem}
+		Der Satz gilt auch, wenn die Jordan-Normalform nicht existiert.
+		Das wird hier aber nicht gezeigt.
+		\begin{proof}
+			Sei 
+			\[ \chi_A(x) = \prod_{i=1}^m \curvb{x-\lambda_i}^{\alpha_i} \quad \text{für } \lambda_i\neq\lambda_j,i\neq j \]
+			\[ A\sim \diag\curvb{ J(r_1^{(1)}, \lambda_1),\ldots,J(r_{t(1)}^{(1)},\lambda_1), J(r_1^{(2)}, \lambda_2),\ldots,J(r_{t(m)}^{(m)},\lambda_m) } \]
+			\[ \chi_A(A) = \prod_{i=1}^m \curvb{A-\lambda_i\idmat}^{\alpha_i} \quad \text{für } \lambda_i\neq\lambda_j,i\neq j \]
+		\end{proof}
+
+	% section jordansche_normalform (end)
+
+	\section{Kegelschnitte und Quadriken} % (fold)
+	\label{sec:kegelschnitte_und_quadriken}
+	
+		Wir betrachten den $\SR^2$ und eine Funktion $\func{h}{\SR^2}{\SR}$
+		\[ h(x,y) = a_{11}x^2 + 2a_{12}xy + a_{22}y^2 + c_1x + c_2y + d \]
+		Wir untersuchen
+		\[ \set{(x,y)\in\SR^2}{ h(x,y)=0 } \]
+		Wir lösen also eine quadratische Gleichung.
+
+		\begin{definition}[quadratische Form]
+			Eine Funktion $\func{q}{\SR^2}{\SR}$ heißt quadratische Form, genau dann wenn
+			\[ q(x,y) = a_{11}x^2 + 2a_{12}xy + a_{22}y^2 \]
+			für bestimmte Koeffizienten $a_{11},a_{12},a_{22}\in\SR$.
+			Man schreibt dann auch für alle $v\in\SR^2$
+			\[ q(v) = v\transp Av \]
+			mit $A:= (a_{ij})\in\m{M}_2(\SR)$ symmetrisch.
+		\end{definition}
+
+		Auf $\SR^n$ sehen die quadratischen Formen so aus:
+		\[ q(x_1,\ldots,x_n) = \sum_{i=1}^n a_{ii}x_i^2 + \sum_{j=i+1}^n a_{ij}x_ix_j \]
+		Ist $A\in\m{M}_n(\SR)$ also eine symmetrische Matrix, so ist $q$ mit
+		\[ q(v)=v\transp A v \]
+		gerade eine quadratische Form.
+
+		Die quadratischen Formen auf dem $\SR^n$ sind isomorph zu den Bilinearformen auf $\SR^n$.
+		\[ q\mapsto b(v,w) = \tfrac{1}{2} \boxb{ q(v+w) - q(v) - q(w) } \]
+		\[ h(x_1,\ldots,x_n) = q(x_1,\ldots,x_n) + \sum_{i=1}^n c_ix_i + d \]
+		\[ \implies \quad h(v) = v\transp A v  + \angleb{c,v} + d \]
+
+		\begin{definition}[Quadrike]
+			Die Quadrike einer so definierten Funktion $h$ ist gerade die Lösungsmenge
+			\[ \set{v\in\SR^n}{h(v)=0} \]
+		\end{definition}
+
+		\begin{definition}[Kegelschnitt]
+			Ein Kegelschnitt ist gerade eine Quadrike aus dem $\SR^2$.
+		\end{definition}
+
+		Beispiel Kreis.
+
+		\begin{definition}[entarteter Kegelschnitt]
+			Ein Kegelschnitt heißt entartet, falls er ein Paar von Geraden, eine Gerade, einen Punkt oder die leere Menge ist.
+		\end{definition}
+
+		Beispiel
+
+		\begin{theorem}[Kongruenz nicht entarteter Kegelschnitte]
+			Jeder nicht entartete Kegelschnitt ist kongruent zu einem der folgenden Typen, wobei jeweils $a_11,a_22>0$.
+			\begin{enumerate}[label=\normalfont(\roman*)]
+				\item Ellipse:
+					\[ a_11x_1^2 + a_22x_2^2 - 1 = 0 \]
+				\item Hyperbel:
+					\[ a_{11}x_1^2 - a_22x_2^2 - 1 = 0 \]
+				\item Parabel:
+					\[ a_{11}x_1^2 - x_2 = 0 \]
+			\end{enumerate}
+		\end{theorem}
+		\begin{proof}
+			Sei $A\in\m{M}_2(\SR)\neq 0$.
+			Dann gibt es ein $C\in\m{O}_2(\SR)$, sodass
+			\[
+				C\transp AC =
+				\begin{pmatrix}
+					\lambda_1 & 0 \\ 0 & \lambda_2
+				\end{pmatrix}
+			\]
+			($h$ und $-h$ besitzen die gleichen Lösungsmengen.)
+			Wir nehmen an, dass $\lambda_1>0$.
+			\[ \lambda_1 x_1^2 + c_1x_1 = \lambda_1\curvb{ x_1 + \frac{c_1}{2\lambda_1} }^2 - \frac{c_1^2}{4\lambda_1} \]
+			\[ x_1^\prime := x_1 + \frac{c_1}{2\lambda_1} \]
+			Wenn $\lambda_i\neq 0$, können wir den Koeffizienten $c_i$ eliminieren.
+
+			Für den Fall $\lambda_2 >0$
+			\[ \lambda_1\curvb{x_1^\prime}^2 + \lambda_2\curvb{ x_2^\prime }^2 + d^\prime = 0 \]
+			Sei 
+			\[ H(y_1,y_2) = \lambda_1y_1^2 + \lambda_2y_2^2 + C_1y_1 + C_2y_2 + D \]
+
+			Wenn $d\geq 0$, dann ist der Kegelschnitt entartet.
+			Dann folgt die Äquivalenz zu
+			\[ \frac{\lambda_1}{-d}\curvb{x_1^\prime}^2 + \frac{\lambda_2}{-d}\curvb{x_2^\prime}^2 - 1 = 0 \]
+
+			Sollte $\lambda_2 < 0$ sein, so gilt:
+			\[ \lambda_1\curvb{x_1^\prime}^2 - \abs{\lambda_2}\curvb{x_2^\prime}^2 + d = 0 \]
+			Wenn $d=0$, dann ist $h$ entartet.
+			Wenn $d>0$: So bekommen wir $d<0$.
+
+			Sei nun $\lambda_2 = 0$.
+			Dann muss $c_2 \neq 0$.
+			\[ h\sim \frac{\lambda_1}{-c_2}\curvb{ x_1^\prime }^2 - x_2 \]
+		\end{proof}
+
+		\textsc{Beispiel:}\\
+		\[ h(x_1,x_2) = x_1^2 + x_1x_2 + x_2^2 + 4x_1 + 3x_2 + 4 \]
+		\[
+			A =
+			\begin{pmatrix}
+				1 & \tfrac{1}{2} \\ \tfrac{1}{2} & 1
+			\end{pmatrix}
+			,\qquad
+			v_{\lambda_1 = 3/2} = 
+			\begin{pmatrix}
+				1 \\ 1
+			\end{pmatrix}
+			,\quad
+			v_{\lambda_2 = 1/2} =
+			\begin{pmatrix}
+				1 \\ -1
+			\end{pmatrix}
+		\]
+		\[
+			C = \frac{1}{\sqrt{2}}
+			\begin{pmatrix}
+				1 & 1 \\ 1 & -1
+			\end{pmatrix}
+		\]
+		\[ h(x_1,x_2) = \frac{1}{4}(x_1-x_2)^2 + \frac{3}{4}(x_1+x_2)^2 + \frac{1}{2}(x_1-x_2) + \frac{7}{2}(x_1+x_2) + 4 \]
+		Dies ist eine Ellipse.
+
+
+		Ist nun $n\geq 3$, so gibt es nach dem Spektralsatz für eine orthogonale Matrix, sodass $A$ eine Diagonalmatrix mit Eigenwerten auf der Diagonalen.
+		Ist dann $\lambda_i\neq 0$, so können wir den Koeffizienten $c_i$ eliminieren.
+		Eine Normalform:
+		\begin{itemize}
+			\item $\det A \neq 0$
+				\[ \sum_{i=1}^n \lambda_ix_i^2 + d = 0 \]
+			\item $\det A = 0$
+				\[ \sum_{i=1}^k \lambda_ix_i^2 + C_{k+1}x_{k+1} = 0 \]
+		\end{itemize}
+		Beispiel Ellipsoide, einschalige Hyperboloide, zweischalige Hyperboloide, hyperbolische Paraboloide.
+
+	% section kegelschnitte_und_quadriken (end)
+
+\end{document}

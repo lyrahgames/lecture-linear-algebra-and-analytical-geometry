@@ -1,0 +1,160 @@
+\input{pre}
+
+\title{Lineare Algebra und Analytische Geometrie II \\ Übungsserie 09}
+\author{Markus Pawellek \\ 144645}
+% \date{}
+\newcommand{\email}{markuspawellek@gmail.com}
+
+
+\begin{document}
+	
+	\articletitle
+
+	\section*{Aufgabe 1}
+	
+		Seien $K$ ein Körper, $V$ ein $K$-Vektorraum mit $\dim V = n$ für ein $n\in\SN$ und $U,W\subset V$ lineare Unterräume.\\
+
+		\textbf{(a):}
+		Sei $f\in\dual{V}$ beliebig.
+
+		\glqq$\supset$\grqq:
+		Im Allgemeinen gilt
+		\begin{alignat*}{3}
+			&f\in \ann U \cap \ann W \\
+			&\implies \quad \forall u\in U,w\in W: \quad f(u) = f(w) = 0 \\
+			&\implies \quad \forall u\in U,w\in W: \quad f(u+w) = f(u) + f(w) = 0 \\
+			&\implies \quad f\in \ann(U+W)
+		\end{alignat*}
+
+		\glqq$\subset$\grqq:
+		Des Weiteren folgt für die Umkehrung
+		\begin{alignat*}{3}
+			& f\in \ann(U+W) \\
+			&\implies \quad \forall u\in U,w\in W: \quad &&f(u+w) = f(u) + f(w) = 0 \\
+			&\implies \quad \forall u,u^\prime\in U,\,w,w^\prime\in W: \quad &&f(u) = -f(w) = -f(w^\prime) \\
+				& && f(w) = -f(u) = -f(u^\prime) \\
+			&\implies \quad \forall u,u^\prime\in U,\,w,w^\prime\in W: \quad &&f(u) = f(u^\prime),\quad f(w)=f(w^\prime) \\
+			&\stackrel{\mathclap{(f \text{ linear})}}{\implies} \quad \forall u\in U,w\in W: \quad &&f(u) = f(w) = 0 \\
+			&\implies \quad f\in \ann U \cap \ann W
+		\end{alignat*}
+		Es gilt also
+		\[
+			\ann(U+W) = \ann U \cap \ann W
+		\]
+		\qedbox
+
+		\textbf{(b):}
+		Sei ein $f\in\dual{V}$.
+		\begin{alignat*}{3}
+			& f\in \ann U + \ann W \\
+			& \implies \quad \exists g,h\in\dual{V}:\quad g(U)=h(W)=\set{0} \quad \land \quad f = g+h \\
+			& \implies \quad f(U\cap W) = \set{0} \\
+			& \implies \quad f\in \ann(U\cap W)
+		\end{alignat*}
+		Es gilt also
+		\[
+			\ann U + \ann W \subset \ann(U\cap W)
+		\]
+		Weiterhin gilt nach bekannten Rechenregeln aus der Vorlesung
+		\[
+			\dim[\ann (U\cap W)] = n - \dim(U\cap W)
+		\]
+		Durch Anwendung dieser Rechenregel und des Dimensionssatzes folgt dann
+		\begin{alignat*}{3}
+			&\dim(\ann U + \ann W) \\
+			&= \underbrace{\dim(\ann U)}_{=n-\dim U} + \underbrace{\dim(\ann W)}_{=n-\dim W} - \dim(\underbrace{\ann U \cap \ann W}_{\stackrel{(\rm{a})}{=}\ann(U+W)}) \\
+			% &= n - \dim U + n - \dim W - \dim[\ann(U+W)] \\
+			&= 2n - \dim U - \dim W - \underbrace{\dim[\ann(U+W)]}_{\mathclap{=n-\dim(U+W) = n - \dim U - \dim W + \dim(U\cap W)}} \\
+			% &= n - \dim U - \dim W + \dim U + \dim W - \dim(U\cap W) \\
+			&= n - \dim(U\cap W) \\
+			&= \dim[\ann (U\cap W)]
+		\end{alignat*}
+		Die Gleichheit der Dimensionen impliziert nun
+		\[
+			\ann U + \ann W = \ann(U\cap W)
+		\]
+		\qedbox
+
+	% section* Aufgabe 1
+
+	\section*{Aufgabe 2}
+	
+		Seien $K$ ein Körper, $V$ ein $K$-Vektorraum und $f\in\dual{V}$ mit $f\neq 0$.
+		Sei weiterhin ein $u\in V$ mit $u\notin\ker f$.
+		Dann folgt unmittelbar aus der Linearität von $f$, dass für alle $\alpha \in K\setminus\set{0}$
+		\[
+			\alpha u \notin \ker f \quad \implies \quad Ku\cap\ker f = \set{0}
+		\]
+		$Ku$ und $\ker f$ bilden damit eine direkte Summe.
+		Des Weiteren ist klar, dass
+		\[
+			Ku\oplus\ker f \subset V
+		\]
+		Sei nun $x\in V$ beliebig.
+		Dann kann aufgrund von $f(u)\neq 0$ Folgendes definiert werden.
+		\[
+			w \define x - \frac{f(x)}{f(u)}u \quad \implies \quad x = w + v,\quad v\define \frac{f(x)}{f(u)}u
+		\]
+		Es muss $v\in Ku$ sein.
+		Weiterhin gilt für $w$
+		\[
+			f(w) = f\curvb{ x - \frac{f(x)}{f(u)}u } = f(x) - \frac{f(x)}{f(u)}f(u) = 0 \quad \implies \quad w\in \ker f
+		\]
+		$x$ wird durch $v$ und $w$ also gerade in ein Element aus $Ku$ und $\ker f$ zerlegt.
+		Diese muss aufgrund der direkten Summe eindeutig sein.
+		Weil $x$ beliebig war, folgt die gewünschte Aussage.
+		\[
+			V \subset Ku\oplus\ker f \quad \implies \quad V = Ku\oplus\ker f
+		\]
+		\qedbox
+	
+	% section* Aufgabe 2
+
+	\section*{Aufgabe 3}
+	
+		Seien $K$ ein Körper, $V$ ein $K$-Vektorraum und $f_1,f_2\in\dual{V}$ mit $f_1,f_2\neq 0$ und $\ker f_1 = \ker f_2$.
+		Dann lässt sich nach Aufgabe 2 der Vektorraum $V$ für ein $u\in V$ mit $u\notin \ker f_1$ beziehungsweise $u\notin \ker f_2$ als direkte Summe schreiben.
+		\[
+			V = Ku \oplus \ker f_1 = Ku \oplus \ker f_2
+		\]
+		Sei $x\in V$ beliebig.
+		Dann gibt es nach dem Beweis aus Aufgabe 2 also ein gewisses $w\in\ker f_1 = \ker f_2$ mit
+		\[
+			x = w + \frac{f_1(x)}{f_1(u)}u = w + \frac{f_2(x)}{f_2(u)}u
+		\]
+		\[
+			\implies \quad f_1(x) = \underbrace{f_1(w)}_{=0} + \frac{f_2(x)}{f_2(u)}f_1(u) = \frac{f_1(u)}{f_2(u)}f_2(x) \eqqcolon \alpha f_2(x)
+		\]
+		Hierbei gilt $\alpha\neq 0$ nach den Definitionen von $f_1$, $f_2$ und $u$.
+		Da $x$ beliebig war, folgt die Aussage $f_1 = \alpha f_2$.
+		\qedbox
+	
+	% section* Aufgabe 3
+
+	% \section*{Aufgabe 4}
+	
+	% 	Seien $K$ ein Körper, $V$ ein $K$-Vektorraum mit $\dim V = n$ für ein $n\in\SN$ und $f_1,\ldots,f_n\in\dual{V}$.
+
+	% 	\glqq$\implies$\grqq:
+	% 	Seien $f_1,\ldots,f_n$ linear unabhängig.
+	% 	Dann folgt durch Anwendung von Aufgabe 3 für alle $i,j\in\SN$ mit $i,j\leq n$ und $i\neq j$
+	% 	\[
+	% 		f_i \neq 0,\qquad \ker f_i \neq \ker f_j
+	% 	\]
+	% 	Wiederum lässt sich nun nach Aufgabe 2 eine Basis $B\define\set{v_1,\ldots,v_n}$ in $V$ wählen, sodass für alle $i\in\SN$ mit $i \leq n$
+	% 	\[
+	% 		V = \ker f_i \dsum Kv_i \quad \implies \quad \ker f_i = \lspan{B\setminus \set{v_i}}
+	% 	\]
+	% 	Durch Anwendung verschiedener Rechenregeln folgt für den Schnitt
+	% 	\begin{alignat*}{3}
+	% 		\bigcap_{i=1}^n \ker f_i &= \bigcap_{i=1}^n \lspan{B\setminus\set{v_i}} = \lspan{ \bigcap_{i=1}^n B\setminus\set{v_i} } = \lspan{ B\setminus\curvb{ \bigcup_{i=1}^n\set{v_i} } } \\
+	% 			&= \lspan{ B\setminus B } = \lspan{\emptyset} = \set{0}
+	% 	\end{alignat*}
+
+	% 	\glqq$\impliedby$\grqq:
+	% 	Sei nun $\bigcap_{i=1}^n \ker f_i = \set{0}$.
+
+
+	% section* Aufgabe 4
+
+\end{document}

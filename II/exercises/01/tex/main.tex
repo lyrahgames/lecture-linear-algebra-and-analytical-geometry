@@ -1,0 +1,211 @@
+\input{pre}
+
+\title{Lineare Algebra und Analytische Geometrie II - Übungsserie 01}
+\author{Markus Pawellek}
+
+\ihead{Lineare Algebra und Analytische Geometrie II \\ Übungsserie 01}
+\ohead{Markus Pawellek - 144645 \\ markuspawellek@gmail.com}
+\cfoot{\newline\newline\newline\pagemark/\pageref{LastPage} }
+
+\begin{document}
+	
+	\section*{\centering Lineare Algebra und Analytische Geometrie II \\ Übungsserie 01} % (fold)
+	\label{sec:lineare_algebra_und_analytische_geometrie_ii}
+
+		\subsection*{Aufgabe 1} % (fold)
+		\label{sub:aufgabe_1}
+		
+			(a): Sei $A\in \m{O}_3(\SR)$ mit $\det A = -1$. 
+			Es ist nun zu zeigen, dass $-1$ ein Eigenwert von $A$ ist.
+			Dafür betrachtet man die folgende Rechnung.
+			\begin{alignat*}{3}
+				\det(A+\m{I}) &= \det\boxb{(A+\m{I})^\m{T}} \\
+					&= \det\curvb{A^\m{T} + \m{I}} \\
+					\text{($A$ ist orthogonal)}\qquad &= \det\curvb{A^\m{T} + A^\m{T}A} \\
+					&= \det A^\m{T} \det(\m{I}+A) \\
+					\curvb{\det A = \det A^\m{T} = -1}\qquad &= - \det(A+\m{I}) \\
+			\end{alignat*}
+			\[
+				\Rightarrow \quad \det(A+\m{I}) = 0 \quad \Rightarrow \quad -1\in\lambda(A)
+			\]
+			\qedbox
+
+			(b): Sei nun $A\in\m{O}_2(\SR)$ mit $\det A = -1$.
+			Um nun zu beweisen, dass $A$ immer die Spiegelung an einer Achse darstellt, soll als Erstes eine Matrix eingeführt werden, welche eine solche Spiegelung beschreibt.
+			Diese soll dann auf Orthogonalität und Determinante untersucht werden.
+			Im Anschluss wird gezeigt, dass sich jede Matrix $A$ mit den angegebenen Eigenschaften als eine solche Matrix schreiben lässt.
+
+			Einer der beiden normierten Richtungsvektoren der Achse sei mit $e\in\SR^2, \norm{e} = 1$ bezeichnet.
+			Es sei dann
+			\[
+				e := \curvb{
+					\begin{matrix}
+						e_x \\ e_y
+					\end{matrix}
+				},
+				\qquad
+				e^\perp := \curvb{
+					\begin{matrix}
+						-e_y \\ e_x
+					\end{matrix}
+				}
+			\]
+			Folglich ergibt sich $\angleb{e,e^\perp} = 0$ und damit bildet $\curlb{e,e^\perp}$ eine Orthonormalbasis.
+			Sei nun $S\in \m{M}_2(\SR)$ mit
+			\[
+				S := \curvb{e,e^\perp} = \curvb{
+					\begin{matrix}
+						e_x & e_y \\ -e_y & e_x
+					\end{matrix}
+				}\qquad
+				\Rightarrow \ \det S = e_x^2 + e_y^2 = \norm{e}^2 = 1
+			\]
+			Daraus folgt nun $S \in \m{SO}_2$.
+			$S$ muss also gerade eine Drehung auf die Orthonormalbasis $\curlb{e,e^\perp}$ beschreiben.
+			Für diese Orthonormalbasis ist die Spiegelachse gerade die Abszisse.
+			Im Koordinatensystem ergibt sich also die Spiegelmatrix $S_x$ zu
+			\[
+				S_x :=\curvb{
+					\begin{matrix}
+						1 & 0 \\ 0 & -1	
+					\end{matrix}	
+				}
+			\]
+			Nach dem Ausführen der Spiegelung transformiert man das System nun durch $S^\m{T}$ zurück in das ursprüngliche.
+			Für die Spiegelmatrix $S_e$ der beliebigen Achse ergibt sich also
+			\[
+				S_e = S^\m{T}S_xS =
+				\curvb{
+					\begin{matrix}
+						e_x & -e_y \\ e_y & e_x
+					\end{matrix}
+				}
+				\curvb{
+					\begin{matrix}
+						1 & 0 \\ 0 & -1	
+					\end{matrix}	
+				}\curvb{
+					\begin{matrix}
+						e_x & e_y \\ -e_y & e_x
+					\end{matrix}
+				} = \curvb{
+					\begin{matrix}
+						e_x^2 - e_y^2 & 2e_xe_y \\ 2e_xe_y & -(e_x^2 - e_y^2)
+					\end{matrix}
+				}
+			\]
+			Dabei ist $S_e\in\m{O}_2(\SR)$ mit $\det S_e = 1$, da $S,S_x\in\m{O}_2(\SR)$ mit $\det S = -\det S_x = 1$.
+
+			Die Spaltenvektoren $a,a^\perp$ von $A$ müssen nun nach der Charakterisierung über orthogonale Matrizen eine Orthonormalbasis des $\SR^2$ bilden.
+			Sei nun $a\in\SR^2$ mit $\norm{a}=1$.
+			Dann gibt es genau zwei Möglichkeiten $a_1^\perp,a_2^\perp\in\SR$ einen orthogonalen Einheitsvektor zu $a$ zu wählen.
+			\[
+				a_1^\perp := \curvb{
+					\begin{matrix}
+						-a_y \\ a_x
+					\end{matrix}
+				},
+				\qquad
+				a_2^\perp := \curvb{
+					\begin{matrix}
+						a_y \\ -a_x
+					\end{matrix}
+				}
+			\]
+			Dabei gilt
+			\[ \det(a,a_1^\perp) = a_x^2 + a_y^2 = 1 ,\qquad \det(a,a_2^\perp) = -\curvb{a_x^2 + a_y^2} = -1 \]
+			Nach der Voraussetzung $\det A = -1$ muss also $a^\perp = a_2^\perp$ sein und $A$ damit die folgende Form haben.
+			\[
+				A = \curvb{
+					\begin{matrix}
+						a_x & a_y \\ a_y & -a_x	
+					\end{matrix}	
+				}
+			\]
+			Es ist nun zu zeigen, dass es ein $e\in\SR^2, \norm{e}=1$ gibt, sodass $A = S_e$.
+			Dafür ist das folgende Gleichungssystem zu lösen.
+			\begin{alignat*}{3}
+				a_x &= e_x^2 - e_y^2 \\
+				a_y &= 2e_xe_y
+			\end{alignat*}
+			\begin{alignat*}{3}
+				\Rightarrow \quad 1+a_x = (e_x^2 + e_y^2) + e_x^2 - e_y^2 = 2e_x^2 \\
+				1-a_x = (e_x^2 + e_y^2) - e_x^2 + e_y^2 = 2e_y^2
+			\end{alignat*}
+			\[ \Rightarrow \quad \abs{e_x} = \sqrt{\frac{1+a_x}{2}},\qquad \abs{e_y} = \sqrt{\frac{1-a_x}{2}} \]
+			Die Vorzeichen bestimmen sich nun aus der zweiten Gleichung.
+			Die Lösung besteht damit aus den zwei Vektoren $e$ und $-e$ mit
+			\[ e := \curvb{ \sqrt{\frac{1+a_x}{2}} \quad \sqrt{\frac{1-a_x}{2}} } \]
+			Dies ist logisch, da $S_e = S_{-e}$ sein muss. \qedbox
+
+		% subsection aufgabe_1 (end)
+
+		% \newpage
+
+		\subsection*{Aufgabe 2} % (fold)
+		\label{sub:aufgabe_2}
+		
+			Seien $A\in\m{M}_2(\SR)$ und $b_A$ die zugehörige Bilinearformen mit
+			\[
+				A = \curvb{
+					\begin{matrix}
+						2 & 1 \\ 1 & 2
+					\end{matrix}	
+				}
+			\]
+			Dann ist $A$ symmetrisch und positiv definit, da für alle $x\in\SR^2, x\neq 0$ gilt
+			\[ x^\m{T}Ax = 2x_1^2 + x_1x_2 + x_1x_2 + 2x_2^2 = x_1^2 + x_2^2 + (x_1+x_2)^2 > 0 \]
+			Damit lässt sich nun das Gram-Schmidtsche Orthonormierungsverfahren anwenden.
+			Die gegebene (frei gewählte) Orthonormalbasis bestehe hier aus den kartesischen Einheitsvektoren $e_1,e_2$.
+			Dann sei
+			\[ v_1 := \frac{e_1}{\norm{e_1}_A} = \frac{e_1}{\sqrt{b_A(e_1,e_1)}} = \frac{e_1}{\sqrt{2}} \quad \Rightarrow \quad \norm{v_1}_A = 1 \]
+			Weiterhin sei dann
+			\[ v_2 := \frac{e_2 - b_A(e_2,v_1)v_1}{\norm{e_2 - b_A(e_2,v_1)v_1}_A} = \frac{\curvb{-\frac{1}{2} \quad 1}^\m{T}}{\norm{\curvb{-\frac{1}{2} \quad 1}^\m{T}}_A} = \frac{\sqrt{2}}{\sqrt{3}} \begin{pmatrix}-\frac{1}{2}\\1\end{pmatrix} \ \Rightarrow \quad \norm{v_2}_A=1 \]
+			Es folgt nach den Verfahrensregeln
+			\[ b_A(v_1,v_2) = 0 \]
+			$\curlb{v_1,v_2}$ stellt damit eine Orthonormalbasis in $\SR^2$ bezüglich $b_A$ dar.
+
+		% subsection aufgabe_2 (end)
+
+		% \newpage
+
+		\subsection*{Aufgabe 3} % (fold)
+		\label{sub:aufgabe_3}
+		
+			Sei $n\in\SN$.
+			Sei weiterhin $b:\SR^n\times\SR^n\longrightarrow\SR$ eine beliebige Bilinearform.
+			Dann definiert man $s,a:\SR^n\times\SR^n\longrightarrow\SR$ durch die folgenden wohldefinierten Ausdrücke.
+			\[ s(x,y):=\frac{1}{2}\boxb{b(x,y) + b(y,x)} ,\qquad a(x,y):=\frac{1}{2}\boxb{b(x,y)-b(y,x)} \]
+			Sowohl $s$ als $a$ sind Linearkombinationen von $b$ und damit wieder Bilinearformen.
+			Es gilt nun für alle $x,y\in\SR^n$
+			\begin{alignat*}{4}
+				s(x,y) &= \frac{1}{2}\boxb{b(x,y) + b(y,x)} &&= &\frac{1}{2}\boxb{b(y,x) + b(x,y)} &=& s(y,x) \\
+				a(x,y) &= \frac{1}{2}\boxb{b(x,y) - b(y,x)} &&= -&\frac{1}{2}\boxb{b(y,x) - b(x,y)} &=& -a(y,x)
+			\end{alignat*}
+			Damit ist $s$ also symmetrisch und $a$ schiefsymmetrisch.
+			Weiterhin folgt nun für alle $x,y\in\SR^n$
+			\[ s(x,y) + a(x,y) = \frac{1}{2}\boxb{b(x,y) + b(y,x)} + \frac{1}{2}\boxb{b(x,y) - b(y,x)} = b(x,y) \]
+			oder auch $b=s+a$. \qedbox
+
+		% subsection aufgabe_3 (end)
+
+		% \newpage
+
+		\subsection*{Aufgabe 4} % (fold)
+		\label{sub:aufgabe_4}
+		
+			Sei $A\in\m{M}_n(\SR)$ für ein $n\in\SN$. Es ist nun folgende Aussage zu zeigen.
+			\[ A \text{ ist positiv definit} \quad \Rightarrow \quad \det A \neq 0 \]
+			Nach Aussagenlogik ergibt sich eine äquivalente Aussage zu
+			\[ \det A = 0 \quad \Rightarrow \quad A \text{ ist nicht positiv definit} \]
+			Sei also nun $\det A = 0$.
+			Dann gibt es ein $x\in\SR$ mit $x\neq 0$, sodass $Ax = 0$ gilt.
+			Für dieses $x$ gilt dann aber auch
+			\[ x^\m{T}Ax = 0 \not>0 \quad \Rightarrow \quad A \text{ ist nicht positiv definit} \]
+			\qedbox
+
+		% subsection aufgabe_4 (end)
+	
+	% section lineare_algebra_und_analytische_geometrie_ii (end)
+
+\end{document}

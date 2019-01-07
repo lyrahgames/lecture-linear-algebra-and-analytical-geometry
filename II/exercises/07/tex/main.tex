@@ -1,0 +1,353 @@
+\input{pre}
+
+\usepackage{titling}
+\title{Lineare Algebra und Analytische Geometrie II \\ Übungsserie 07}
+\author{Markus Pawellek \\ 144645}
+% \email{markuspawellek@gmail.com}
+\newcommand{\email}{markuspawellek@gmail.com}
+
+
+\newcommand{\equivalent}{\Longleftrightarrow}
+
+\DeclareMathOperator{\tr}{tr}
+
+
+
+\usepackage{fancyhdr}
+
+\fancypagestyle{titlestyle}{
+	\fancyhf{}
+	\fancyfoot[C]{\footnotesize\bigskip\thepage/\pageref{LastPage}}
+	\renewcommand{\footrulewidth}{0.4pt}
+	\renewcommand{\headrulewidth}{0pt}
+}
+
+\fancypagestyle{mainstyle}{
+	\fancyhf{}
+	\fancyfoot[C]{\footnotesize\bigskip\thepage/\pageref{LastPage}}
+	\fancyhead[RO,LE]{\footnotesize \thetitle} %left
+	\fancyhead[RE,LO]{\footnotesize \theauthor} %right
+	\renewcommand{\footrulewidth}{0.5pt}
+	\renewcommand{\headrulewidth}{0.5pt}
+}
+
+\pagestyle{mainstyle}
+
+
+\newcommand{\articletitle}{
+	\thispagestyle{titlestyle}
+	\hrule
+	\section*{\centering \thetitle} % (fold)
+	\noindent
+	\parbox[b][][c]{0.5\textwidth}{\raggedright{\theauthor}}\hfill\parbox[b][][c]{0.5\textwidth}{\raggedleft{\email}}\\
+	\hrule
+	\bigskip
+}
+
+\newcommand{\transp}[1]{ {#1}^\m{T} }
+\newcommand{\inv}[1]{ {#1}^{-1} }
+\newcommand{\conj}[1]{ \overline{#1} }
+\newcommand{\idmat}{\m{I}}
+\newcommand{\define}{\coloneqq}
+
+\begin{document}
+
+	\articletitle
+
+	\section*{Aufgabe 1} % (fold)
+	\label{sec:aufgabe_1}
+	
+		\textbf{(a):}
+		Sei $A\in\m{M}_2(\SR)$ mit dem charakteristischen Polynom $\chi$
+		\[
+			A \define
+			\begin{pmatrix}
+				3 & 0 & 8 \\
+				3 & -1 & 6 \\
+				-2 & 0 & -5
+			\end{pmatrix}
+			\quad \implies \chi(\lambda) = (3-\lambda)(1+\lambda)(5+\lambda) - 16(1+\lambda) = -(1+\lambda)^3
+		\]
+		$A$ besitzt damit nur den Eigenwert $-1$ mit algebraischer Vielfachheit $3$.
+		Für die Eigenvektoren $\transp{(x,y,z)}\in\SR^3$ gilt dann
+		\begin{alignat*}{3}
+			&\! \begin{drcases}
+			3x + 8z &= -x \\
+			3x - y + 6z &= -y \\
+			-2x - 5z &= -z
+			\end{drcases}
+			\implies \quad x=-2z \quad \implies \quad \dim \m{E}_{-1}(A) = 2
+		\end{alignat*}
+		Der Eigenwert besitzt demzufolge die geometrische Vielfachheit $2$.
+		Die Jordan-Normalform $J$ von $A$ wird also gerade durch zwei Jordan-Blöcke beschrieben.
+		\[
+			A\sim \diag\boxb{ J(2,-1), J(1,-1) } =
+			\begin{pmatrix}
+				-1 & 1 & 0 \\
+				0 & -1 & 0 \\
+				0 & 0 & -1
+			\end{pmatrix}
+		\]
+
+		Notiz zur Nebenrechnung:
+		Die Transformationsmatrix ist gerade
+		\[
+			\begin{pmatrix}
+				8 & 0 & 0 \\
+				6 & 0 & 1 \\
+				-4 & 1 & 0
+			\end{pmatrix}
+		\]
+
+		\textbf{(b):}
+		Sei $A\in\m{M}_2(\SR)$ mit dem charakteristischen Polynom $\chi$
+		\[
+			A \define
+			\begin{pmatrix}
+				1 & -3 & 0 & 3 \\
+				-2 & -6 & 0 & 13 \\
+				0 & -3 & 1 & 3 \\
+				-1 & -4 & 0 & 8
+			\end{pmatrix}
+			\quad \implies \chi(\lambda) = (1-\lambda)^4
+		\]
+		$A$ besitzt damit nur den Eigenwert $\lambda\define 1$ mit algebraischer Vielfachheit $4$.
+		Für die Eigenvektoren $\transp{(x,y,z,t)}\in\SR^4$ gilt dann
+		\begin{alignat*}{3}
+			\begin{drcases}
+				x = 3t \\
+				y = t
+			\end{drcases}
+			\implies \quad \dim \m{E}_{1}(A) = 2
+		\end{alignat*}
+		Der Eigenwert besitzt demzufolge die geometrische Vielfachheit $2$.
+		Die Jordan-Normalform $J$ von $A$ wird also gerade durch zwei Jordan-Blöcke beschrieben.
+		Für die Größe der Jordan-Blöcke betrachtet man $B\define A-\lambda\idmat$.
+		Dann ist $\dim(\ker B) = 2$.
+		Durch direktes Rechnen folgt
+		\[ B^3 = 0 \quad \implies \quad \dim(\ker B^3) = 4 \]
+		$B$ ist also nilpotent.
+		Es gilt damit nach bereits bewiesenen Sätzen
+		\[ 4 =\dim(\ker B^3) > \dim(\ker B^2) = 3 > \dim(\ker B) =2 \]
+		Die Dimensionen nehmen damit immer um $1$ ab.
+		Demzufolge besitzt der größte Jordan-Blöcke die Dimension $3$.
+		\[
+			A\sim \diag\boxb{ J(3,1), J(1,1) } =
+			\begin{pmatrix}
+				1 & 1 & 0 & 0 \\
+				0 & 1 & 1 & 0 \\
+				0 & 0 & 1 & 0 \\
+				0 & 0 & 0 & 1
+			\end{pmatrix}
+		\]
+
+		Notiz zur Nebenrechnung:
+		Die Transformationsmatrix ist gerade
+		\[
+			\begin{pmatrix}
+				3 & 0 & 1 & 3 \\
+				1 & -2 & 0 & 1 \\
+				3 & 0 & 0 & 0 \\
+				1 & -1 & 0 & 1
+			\end{pmatrix}
+		\]
+
+	% section aufgabe_1 (end)
+
+	\section*{Aufgabe 2} % (fold)
+	\label{sec:aufgabe_2}
+	
+		Sei $A\define J(r,\lambda)$ für ein $r\in\SN$ und ein $\lambda\in\SR,\lambda\neq 0$.
+		Dann besitzt $A$ nur den Eigenwert $\lambda$ mit der algebraischen Vielfachheit $r$ und der geometrischen Vielfachheit $1$.
+		Damit besitzt $\inv{A}$ nur den Eigenwert $\inv{\lambda}$ und die selben Eigenvektoren (siehe Lineare Algebra I).
+		Der Eigenraum von $\inv{A}$ zum Eigenwert $\inv{\lambda}$ besitzt also auch die Dimension $1$.
+		$\inv{\lambda}$ besitzt also bezüglich $\inv{A}$ die gleich algebraische und geometrische Vielfachheit wie $\lambda$ bezüglich $A$.
+		Die Jordan-Normalform $J$ von $\inv{A}$ setzt sich demnach aus einem Jordan-Block zusammen.
+		\[ \inv{A} \sim J\curvb{ r, \inv{\lambda} } \]
+
+		Für $A^2$ gelten analoge Schlussfolgerungen.
+		$A^2$ besitzt nur den Eigenwert $\lambda^2$.
+		Der zugehörige Eigenraum besitzt die Dimension $1$.
+		Die Jordan-Normalform $J$ von $A^2$ besteht wieder nur aus einem Jordan-Block.
+		\[ A^2 \sim J\curvb{ r, \lambda^2 } \]
+
+	% section aufgabe_2 (end)
+
+	\section*{Aufgabe 3} % (fold)
+	\label{sec:aufgabe_3}
+	
+		\textbf{(a):} Sei $A\in\m{M}_2(\SR)$ mit dem charakteristischen Polynom $\chi$
+		\[
+			A \define
+			\begin{pmatrix}
+				1 & 1 \\
+				-1 & 3
+			\end{pmatrix}
+			\quad \implies \quad \chi(\lambda) = (1-\lambda)(3-\lambda) + 1 = (\lambda-2)^2
+		\]
+		$A$ besitzt damit nur den Eigenwert $2$ mit algebraischen Vielfachheit $2$.
+		Für die zugehörigen Eigenvektoren $\transp{(x,y)}\in\SR^2$ muss gelten
+		\[ x+y=2x,\quad -x+3y=2y \quad \implies \quad x=y \]
+		Der Eigenraum besitzt demzufolge die Dimension $1$, was der geometrischen Vielfachheit des Eigenwertes entspricht.
+		Die Jordan-Normalform der Matrix besteht also aus einem Jordan-Block.
+		Im zweidimensionalen Fall reicht es nun einen Vektor $v\in\SR^2$ zu wählen, welcher kein Eigenvektor ist.
+		\[
+			v =
+			\begin{pmatrix}
+				1 \\ 0
+			\end{pmatrix}
+			\quad \implies \quad u\define (A-\lambda\idmat)v =
+			\begin{pmatrix}
+				-1 \\ -1
+			\end{pmatrix}
+		\]
+		Es ist dann $C:=(u,v)\in\m{Gl}_n(\SR)$ und $\inv{C}AC$ die Jordan-Normalform von $A$.
+		\[
+			J\define\inv{C}AC = 
+			\begin{pmatrix}
+				0 & -1 \\
+				1 & -1
+			\end{pmatrix}
+			\begin{pmatrix}
+				1 & 1 \\
+				-1 & 3
+			\end{pmatrix}
+			\begin{pmatrix}
+				-1 & 1 \\
+				-1 & 0
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				2 & 1 \\
+				0 & 2
+			\end{pmatrix}
+			= J(2,2)
+		\]
+		Für $J$ lässt sich nun leicht durch vollständige Induktion für beliebige $k\in\SN$ zeigen
+		\[
+			J^k =
+			\begin{pmatrix}
+				2^k & k2^{k-1} \\
+				0 & 2^k
+			\end{pmatrix}
+		\]
+		Es gilt nach aus der Vorlesung bekannten Rechenregeln für $k\in\SN$
+		\[
+			A^k = CJ^k\inv{C} =
+			\begin{pmatrix}
+				2^k - k2^{k-1} & k2^{k-1} \\
+				-k2^{k-1} & 2^k + k2^{k-1}
+			\end{pmatrix}
+		\]
+		\[
+			\implies \quad A^{50} =
+			\begin{pmatrix}
+				-48\cdot 2^{49} & 50\cdot 2^{49} \\
+				-50\cdot 2^{49} & 52\cdot 2^{49}
+			\end{pmatrix}
+		\]
+
+		\textbf{(b):}
+		Sei nun
+		\[
+			A \define
+			\begin{pmatrix}
+				7 & -4 \\
+				14 & -8
+			\end{pmatrix}
+			\quad \implies \quad \chi(\lambda) = (7-\lambda)(-8-\lambda) + 56 = \lambda(\lambda+1)
+		\]
+		Die Eigenwerte von $A$ sind damit $\lambda_1\define -1$ und $\lambda_2\define 0$ mit der algebraischen Vielfachheit 1.
+		Da $A$ wieder eine $2\times 2$-Matrix ist, besitzen beide Eigenräume die Dimension $1$.
+		Die Jordan-Normalform $J$ von $A$ besteht damit aus zwei Jordan-Blöcken der Dimension $1$.
+		$J$ ist also eine Diagonalmatrix.
+		Es seien nun $u,v\in\SR^2$ zwei Eigenvektoren zu dem Eigenwert $\lambda_1$ beziehungsweise $\lambda_2$.
+		\[
+			u\define
+			\begin{pmatrix}
+				1 \\ 2
+			\end{pmatrix}
+			,\qquad v\define
+			\begin{pmatrix}
+				4 \\ 7
+			\end{pmatrix}
+		\]
+		Es sei wieder $C\define (u,v)$.
+		Dann ist
+		\[
+			J\define\inv{C}AC = 
+			\begin{pmatrix}
+				-7 & 4 \\
+				2 & -1
+			\end{pmatrix}
+			\begin{pmatrix}
+				7 & -4 \\
+				14 & -8
+			\end{pmatrix}
+			\begin{pmatrix}
+				1 & 4 \\
+				2 & 7
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				-1 & 0 \\
+				0 & 0
+			\end{pmatrix}
+		\]
+		Es gilt damit für $k\in\SN$
+		\[
+			J^k = 
+			\begin{pmatrix}
+				(-1)^k & 0 \\
+				0 & 0
+			\end{pmatrix}
+			\quad \implies \quad J^{64} = 
+			\begin{pmatrix}
+				1 & 0 \\
+				0 & 0
+			\end{pmatrix}
+		\]
+		\[
+			A^{64} = CJ^{64}\inv{C} =
+			\begin{pmatrix}
+				-7 & 4 \\
+				-14 & 8
+			\end{pmatrix}
+		\]
+
+	% section aufgabe_3 (end)
+
+	\section*{Aufgabe 4} % (fold)
+	\label{sec:aufgabe_4}
+	
+		Sei $A\in\m{M}_n(\SC)$ für ein $n\in\SN$.
+		Dann existiert die Jordan-Zerlegung von $A$.
+		Es gibt also eine Diagonalmatrix $D\in\m{M}_n(\SC)$ und eine nilpotente Matrix $N\in\m{M}_n(\SC)$ mit $N=\diag(J(r_1),\ldots,J(r_m))$ für gewisse Parameter $r_1,\ldots,r_m\in\SN,m\in\SN$ mit $\sum_{i=1}^{m}r_i = n$, sodass
+		\[ A\sim D + N,\qquad DN=ND \]
+		Es folgt damit aus bekannten Rechenregeln
+		\[ \det A = \det(D+N) = \det D,\qquad \tr A = \tr(D+N) = \tr D \]
+		Für das Matrixexponential gilt dann unter Verwendung von $DN=ND$
+		\[ \exp A \sim \exp(D+N) = \exp D \exp N \]
+		\[ \implies \quad \det(\exp A) = \det(\exp D \exp N) = \det(\exp D)\det(\exp N) \]
+
+		$N$ ist ein obere Dreiecksmatrix mit Nullen auf der Diagonalen.
+		Demzufolge ist auch $N^k$ für ein beliebiges $k\in\SN$ eine obere Dreiecksmatrix mit Nullen auf der Diagonalen.
+		Man wendet nun die Definition des Matrixexponetials an.
+		\[ \exp N = \idmat + \sum_{k=1}^\infty \frac{N^k}{k!} \]
+		Es muss also $\exp N$ eine obere Dreiecksmatrix mit Einsen auf der Diagonalen sein.
+		Damit gilt unmittelbar
+		\[ \det (\exp N) = 1 \]
+
+		Sei nun $\diag(d_1,\ldots,d_n)\define D$.
+		\begin{alignat*}{3}
+			&\implies \quad D^k = \diag\curvb{d_1^k,\ldots,d_n^k} \quad \text{für alle } k\in\SN \\
+			&\implies \quad \exp D = \diag\curvb{e^{d_1},\ldots,e^{d_n}} \\
+			&\implies \quad \det(\exp D) = \prod_{i=1}^n e^{d_i} = \exp\curvb{\sum_{i=1}^n d_i} = \exp(\tr D) = \exp(\tr A)
+		\end{alignat*}
+		Damit folgt die Aussage
+		\[ \det(\exp A) = \exp(\tr A) \]
+		\qedbox
+
+	% section aufgabe_4 (end)
+
+\end{document}

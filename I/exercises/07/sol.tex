@@ -1,0 +1,378 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+
+\usepackage{geometry}
+\geometry{a4paper, lmargin=30mm, rmargin=30mm, tmargin=30mm, bmargin=30mm}
+\setlength{\parindent}{0mm}
+
+\usepackage[automark]{scrpage2}
+\usepackage{lastpage}
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\ihead[]{Lineare Algebra und Analytische Geometrie I \\ Übungsserie 7}
+\ohead[]{Markus Pawellek \\ 144645}
+\cfoot[]{\pagemark/\pageref{LastPage}}
+\setheadsepline[\textwidth]{0.5pt}
+
+
+\begin{document}
+	
+	\begin{center}
+		\section*{Lineare Algebra und Analytische Geometrie I\\ Übungsserie 7} % (fold)
+		\label{sec:lineare_algebra_und_analytische_geometrie_i}
+		
+		% section lineare_algebra_und_analytische_geometrie_i (end)
+	\end{center}
+
+	\subsection*{Aufgabe 1} % (fold)
+	\label{sub:aufgabe_1}
+	
+		\subsubsection*{(i)} % (fold)
+		\label{ssub:i}
+			
+			\begin{description}
+				\item[Voraussetzung:] \hfill \\
+					$A:\mathbb{R}^3\longrightarrow\mathbb{R}^2$ mit $A(x,y,z) = (x+2y , y-z)$
+				\item[Behauptung:] \hfill \\
+					$A$ ist eine lineare Abbildung.
+				\item[Beweis:]
+			\end{description}
+			
+			Sei $(a,b,c),(x,y,z) \in \mathbb{R}^3$ beliebig. Dann gilt:
+			\begin{align*}
+				A((a,b,c)+(x,y,z)) &= A(a+x,b+y,c+z)\\
+				&= \left((a+x) + 2(b+y), (b+y) - (c+z) \right)\\
+				&= ((a+2b) + (x+2y), (b-c) + (y-z))\\
+				&= (a+2b, b-c) + (x+2y,y-z)\\
+				&= A(a,b,c) + A(x,y,z)
+			\end{align*}
+			Weiterhin sei $\lambda \in \mathbb{R}$ beliebig. Dann gilt:
+			\begin{align*}
+				A(\lambda \cdot (a,b,c)) &= A(\lambda a, \lambda b, \lambda c)\\
+				&= (\lambda a + 2\lambda b, \lambda b - \lambda c) \\
+				&= (\lambda(a+2b), \lambda(b-c)) \\
+				&= \lambda (a+2b, b-c)\\
+				&= \lambda\cdot A(a,b,c)
+			\end{align*}
+			Damit erfüllt $A$ die Bedingungen (nach Definition) für eine lineare Abbildung. $A$ ist also linear. $\hfill\Box$
+
+		% subsubsection i (end)
+
+		\subsubsection*{(ii)} % (fold)
+		\label{ssub:ii}
+		
+			\begin{description}
+				\item[Voraussetzung:] \hfill \\
+					$B:\mathbb{R}^3\longrightarrow \mathbb{R}^2$ mit $B(x,y,z) = (x+y,z+1)$
+				\item[Behauptung:] \hfill \\
+					$B$ ist nicht linear.
+				\item[Beweis:]
+			\end{description}
+			
+			\paragraph{Gegenbeispiel:} % (fold)
+			\label{par:gegenbeispiel_}
+			
+				Es gilt $(1,1,1) \in \mathbb{R}^3$. Dann gilt:
+				\begin{align*}
+					B((1,1,1)+(1,1,1)) &= B(2,2,2) = (2+2,2+1) &= (4,3) \\
+					B(1,1,1)+B(1,1,1) &= (1+1,1+1)+(1+1,1+1) = (2,2)+(2,2) &= (4,4) 
+				\end{align*}
+				\[
+					\Rightarrow \ B((1,1,1)+(1,1,1)) = (4,3) \neq (4,4) = B(1,1,1)+B(1,1,1) 
+				\]
+				Damit gelten die Bedingungen schon nicht für $(1,1,1)$ nicht. $B$ kann also nicht linear sein. $\hfill\Box$
+
+			% paragraph gegenbeispiel_ (end)
+
+		% subsubsection ii (end)
+
+		\newpage
+
+		\subsubsection*{(iii)} % (fold)
+		\label{ssub:iii}
+		
+			\begin{description}
+				\item[Voraussetzung:] \hfill \\
+					$C:\mathbb{R}^3\longrightarrow \mathbb{R}^2$ mit $C(x,y,z) = (x+yz,z)$
+				\item[Behauptung:] \hfill \\
+					$C$ ist nicht linear.
+				\item[Beweis:]
+			\end{description}
+			
+			\paragraph{Gegenbeispiel:} % (fold)
+			\label{par:gegenbeispiel_}
+			
+				Es gilt $(1,1,1)\in \mathbb{R}^3$ und $2\in \mathbb{R}$. Dann gilt:
+				\begin{align*}
+					C(2\cdot (1,1,1)) &= C(2,2,2) = (2+2\cdot2,2) &= (6,2) \\
+					2\cdot C(1,1,1) &= 2\cdot(1+1\cdot1,1) = 2\cdot(2,1) &= (4,2)
+				\end{align*}
+				\[
+					\Rightarrow \ C(2\cdot (1,1,1)) = (6,2) \neq (4,2) = 2\cdot C(1,1,1)
+				\]
+				Dieses Beispiel zeigt, dass die Bedingung nicht allgemein erfüllt ist. $C$ kann also nicht linear sein. $\hfill\Box$
+
+			% paragraph gegenbeispiel_ (end)
+
+		% subsubsection iii (end)
+
+		\subsubsection*{(iv)} % (fold)
+		\label{ssub:iv}
+		
+			\begin{description}
+				\item[Voraussetzung:] \hfill \\
+					$D:\mathbb{C}\longrightarrow\mathbb{C}$ mit $D(z)=\overline{z}$
+				\item[Behauptung:] \hfill \\
+					Wenn $K = \mathbb{R}$, dann ist $D$ linear.\\
+					Wenn $K = \mathbb{C}$, dann ist $D$ nicht linear.
+				\item[Beweis:]
+			\end{description}
+			
+			Sei $(a+ib),(c+id)\in \mathbb{C}$. Dann gilt allgemein:
+			\begin{align*}
+				D((a+ib) + (c+id)) &= D((a+c) + i(b+d))\\
+				&= (a+c) -i(b+d) \\
+				&= (a-ib) + (c-id) \\
+				&= D(a+ib) + D(c+id)
+			\end{align*}
+
+			\paragraph{Fall $K = \mathbb{R}$:} % (fold)
+			\label{par:fall_}
+			
+				Sei weiterhin $\lambda \in \mathbb{R}$. Dann gilt:
+				\begin{align*}
+					D(\lambda\cdot (a+ib)) &= D(\lambda a + i\lambda b)\\
+					&= \lambda a - i\lambda b \\
+					&= \lambda(a-ib)\\
+					&= \lambda\cdot D(a+ib)
+				\end{align*}
+				Damit erfüllt $D$ für den Fall $K = \mathbb{R}$ die benötigten Bedingungen. $D$ ist also linear.
+
+			% paragraph fall_ (end)
+
+			\paragraph{Fall $K = \mathbb{C}$ (durch Gegenbeispiel):} % (fold)
+			\label{par:fall_}
+			
+				Es gilt $(1+i),(1-i) \in \mathbb{C}$. Dann gilt weiterhin:
+				\begin{align*}
+					D((1+i)\cdot(1-i)) &= D(1-i^2) = D(2) &=& 2 \\
+					(1+i)\cdot D(1-i) &= (1+i)\cdot(1+i) = 1+2i+i^2 &=& 2i
+				\end{align*}
+				\[
+					\Rightarrow \ D((1+i)\cdot(1-i)) = 2 \neq 2i = (1+i)\cdot D(1-i)
+				\]
+				Für den Fall $K = \mathbb{C}$ sind die Bedingungen also nicht allgemein erfüllt. $D$ ist also nicht linear. $\hfill\Box$
+
+			% paragraph fall_ (end)
+
+		% subsubsection iv (end)
+
+	% subsection aufgabe_1 (end)
+
+	\newpage
+
+	\subsection*{Aufgabe 2} % (fold)
+	\label{sub:aufgabe_2}
+	
+		\begin{description}
+			\item[Voraussetzung:]\hfill \\
+				Sei $A:\mathbb{R}^2 \longrightarrow \mathbb{R}^3$ eine lineare Abbildung mit\\
+				$A(1,2)=(0,3,5)$ und $A(1,-1)=(3,0,2)$.
+			\item[Aufgabe:]\hfill \\
+				Bestimmen Sie $A(1,5)$ und $A(x,y)$ für alle $x,y \in \mathbb{R}$.
+			\item[Lösung:]
+		\end{description}
+
+		Jede lineare Abbildung lässt sich mithilfe einer Matrix beschreiben. Für eine bestimmte $3\times 2$-Matrix $M$ gilt also für alle $x,y\in \mathbb{R}$ und bestimmte $x^\prime,y^\prime,z^\prime \in \mathbb{R}$:
+		\[
+			A(x,y) = M(x,y) = (x^\prime, y^\prime, z^\prime)
+		\]
+		Eine Matrix selbst beschreibt immer ein lineares Gleichungssystem. Damit können also allgemein folgende Gleichungen für bestimmte Koeffizienten $a,b,c,d,e,f \in \mathbb{R}$ aufgestellt werden:
+		\begin{align*}
+			x^\prime &= ax + by \\
+			y^\prime &= cx + dy \\
+			z^\prime &= ex + fy
+		\end{align*}
+		Setzt man nun die bereits bekannten Punkte in dieses System ein, folgt:
+
+		\begin{table}[h]
+			\center
+			\begin{tabular}{cc}
+				$\begin{aligned}
+					\text{(1)}& &0 &= a + 2b \\
+					\text{(2)}& &3 &= c + 2d \\
+					\text{(3)}& &5 &= e + 2f
+				\end{aligned}$
+				& 
+				$\begin{aligned}
+					\text{(4)}& &3 &= a - b \\
+					\text{(5)}& &0 &= c - d \\
+					\text{(6)}& &2 &= e - f
+				\end{aligned}$ 
+			\end{tabular}
+		\end{table}
+
+		Für Gleichung (4) und (1) folgt:
+		\[
+			\stackrel{(4)}{\Rightarrow} \ a = 3+b \ \stackrel{(1)}{\Rightarrow} \ 3+3b=0 \ \Rightarrow \ b = -1 \ \Rightarrow \ a = 2
+		\]
+		Weiterhin folgt für (2) und (5):
+		\[
+			\stackrel{(5)}{\Rightarrow} \ c = d \ \stackrel{(2)}{\Rightarrow} \ 3d = 3 \ \Rightarrow \ d = 1 \ \Rightarrow \ c = 1
+		\]
+		Für (3) und (6) folgt dann:
+		\[
+			\stackrel{(6)}{\Rightarrow} \ e = 2+f \ \stackrel{(3)}{\Rightarrow} \ 2+3f=5 \ \Rightarrow \ f = 1 \ \Rightarrow \ e = 3
+		\]
+		Damit gilt für alle $x,y \in \mathbb{R}$:
+		\[
+			\underline{\underline{A(x,y) = (2x-y, x+y, 3x+y)}}
+		\]
+		\[
+			\Rightarrow \ \underline{\underline{A(1,5) = (-3,6,8)}}
+		\]
+
+	% subsection aufgabe_2 (end)
+
+	\newpage
+
+	\subsection*{Aufgabe 3} % (fold)
+	\label{sub:aufgabe_3}
+	
+		\begin{description}
+			\item[Voraussetzung:]\hfill \\
+				Sei $A:\mathbb{R}^3 \longrightarrow \mathbb{R}^4$ eine lineare Abbildung mit\\
+				$A(x,y,z)=(x+2y+z,\ y+3z,\ -x-y+2z,\ x+3y+4z)$.
+			\item[Aufgabe:]\hfill \\
+				Bestimmen Sie die Basen von Bild($A$) und Kern($A$), sowie den Rang und den Defekt von $A$.
+			\item[Lösung:]
+		\end{description}
+
+		Es gilt Kern$(A) = A^{-1}(\{ (0,0,0,0) \})$. Der Kern ist die Menge aller Vektoren aus $\mathbb{R}^3$ , welche auf $(0,0,0,0)$ abgebildet werden. Für diese Vektoren gilt also (für bestimmte $x,y,z \in \mathbb{R}$):
+		\[
+			A(x,y,z) = (0,0,0,0)
+		\]
+		\begin{align*}
+			(1) \ 0 &= x+2y+z\\
+			(2) \ 0 &= y+3z\\
+			(3) \ 0 &= -x-y+2z\\
+			(4) \ 0 &= x+3y+4z
+		\end{align*}
+		\[
+			\stackrel{(2)}{\Rightarrow} \ y = -3z \ \stackrel{(3)}{\Rightarrow} \ x = 5z
+		\]
+		\[
+			\stackrel{(1)}{\Rightarrow} \ 5z-6z+z=0 \ \Rightarrow \ 0=0 \ \Rightarrow \ w.A. 
+		\]
+		\[
+			\stackrel{(4)}{\Rightarrow} \ 5z-9z+4z=0 \ \Rightarrow \ 0=0 \ \Rightarrow \ w.A.
+		\]
+		Sowohl $x$ als auch $y$ können eindeutig durch $z$ bestimmt werden. Allerdings erlauben es die Gleichungen $z$ beliebig zu wählen.
+		Sei $z = c \in \mathbb{R}$ mit $c$ beliebig, dann können alle Vektoren aus $\mathbb{R}^3$, welche auf $(0,0,0,0)$ abgebildet werden, durch folgenden Zusammenhang ausgedrückt werden:
+		\[
+			A(5c,-3c,c) = (0,0,0,0)
+		\]
+		Weiterhin gilt dann für beliebige $c \in \mathbb{R}$:
+		\[
+			(5c,-3c,c) = c\cdot(5,-3,1)
+		\]
+		Die Vektoren können also alle aus einer Linearkombination von $(5,-3,1)$ erzeugt werden (Erzeugereigenschaften). Dieser Vektor ist als System betrachtet linear unabhängig, denn für $\lambda \in \mathbb{R}$ und
+		\[
+		 	\lambda\cdot(5,-3,1) = (0,0,0)
+		\] 
+		gibt es nur eine Lösung für $\lambda = 0$. Damit bildet $\{(5,-3,1)\}$ eine Basis zum Kern$(A)$. Es folgt dann Defekt$(A) = \dim(\text{Kern}(A)) = 1$.
+
+		Für das Bild von $A$ müssen alle Vektoren des $\mathbb{R}^4$ bestimmt werden, die durch $A$ abgebildet werden. Sei $a,b,c,d \in \mathbb{R}$. Dann gilt für die Abbildung auf $(a,b,c,d)$ für $x,y,z \in \mathbb{R}$ (wegen $A(x,y,z) = (a,b,c,d)$):
+		\begin{align*}
+			(1) \ a &= x+2y+z\\
+			(2) \ b &= y+3z\\
+			(3) \ c &= -x-y+2z\\
+			(4) \ d &= x+3y+4z
+		\end{align*}
+		\[
+			\stackrel{(2)}{\Rightarrow} \ y = b-3z \ \stackrel{(3)}{\Rightarrow} \ x = -c-b+3z+2z = 5z-c-b
+		\]
+		\begin{align*}
+			&\stackrel{(2)}{\Rightarrow} \ y = b-3z \ \stackrel{(3)}{\Rightarrow} \ x = -c-b+3z+2z = 5z-c-b \\
+			&\stackrel{(1)}{\Rightarrow} \ 5z-c-b+2b-6z+z = a \ \Rightarrow \ a = b-c \ \Rightarrow \ c = b-a \\
+			&\stackrel{(4)}{\Rightarrow} \ 5z-c-b+3b-9z+4z=d \ \Rightarrow \ d = 2b-c \ \Rightarrow \ d = b+a
+		\end{align*}
+		Damit können die Vektoren, auf welche abgebildet wird, durch $(a,b,b-a,a+b)$ dargestellt werden, sofern $a$ und $b$ beliebig sind.
+		\[
+			\ \Rightarrow \ (a,b,b-a,a+b) = (a,0,-a,a) + (0,b,b,b) = a\cdot(1,0,-1,1) + b\cdot(0,1,1,1)
+		\]
+		Es wird deutlich, dass $\{(1,0,-1,1),(0,1,1,1)\}$ ein erzeugendes System für diese Vektoren darstellt. Weiterhin gibt es für
+		\[
+			a\cdot(1,0,-1,1) + b\cdot(0,1,1,1) = (0,0,0,0)
+		\]
+		nur eine Lösung für $a=b=0$. Die beiden Vektoren sind also linear unabhängig. $\{(1,0,-1,1),(0,1,1,1)\}$ bildet damit eine Basis für alle abgebildeten Vektoren. Es folgt dann Rang$(A)=\dim(\text{Bild}(A))=2$.
+
+	% subsection aufgabe_3 (end)
+
+	\newpage
+
+	\subsection*{Aufgabe 4} % (fold)
+	\label{sub:aufgabe_4}
+	
+		\subsubsection*{(i)} % (fold)
+		\label{ssub:i}
+		
+			Sei $A:\mathbb{R}\longrightarrow\mathbb{R}^2$ eine lineare Abbildung mit $A(x)=(x,0)$ für alle $x \in \mathbb{R}$.
+			Dann gilt $A(0)=(0,0)$. Weiterhin folgt:
+			\[
+				\Rightarrow \ A^{-1}(\{(1,1)\}) = \emptyset \ \Rightarrow \ \text{Lin}(A^{-1}(\{(1,1)\})) = \emptyset
+			\]
+			Aber es gilt:
+			\[
+				(0,0)\in \text{Lin}(\{(1,1)\}) \ \Rightarrow \ 0 \in A^{-1}(\text{Lin}(\{(1,1)\}))
+			\]
+			\[
+				\Rightarrow \ A^{-1}(\text{Lin}(\{(1,1)\})) \neq \text{Lin}(A^{-1}(\{(1,1)\}))
+			\]
+			Damit gilt also die Mengengleichheit nicht im Allgemeinen.
+
+		% subsubsection i (end)
+
+		\subsubsection*{(ii)} % (fold)
+		\label{ssub:ii}
+		
+			\begin{description}
+				\item[Voraussetzung:] \hfill \\
+					Sei $A:V\longrightarrow W$ eine lineare Abbildung und $V,W$ Vektorräume über $K$. Sei $W^\prime$ ein Untervektorraum von $W$.
+				\item[Behauptung:] \hfill \\
+					$A^{-1}(W^\prime)$ ist ein Untervektorraum von V.
+				\item[Beweis:]
+			\end{description}
+			
+			Allgemein gilt:
+			\[
+				A^{-1}(W^\prime) = \{ v\in V \ | \ A(v) \in W^\prime\}
+			\]
+			Da es sich bei $W^\prime$ um einen Untervektorraum handelt, gilt $W^\prime \neq \emptyset$. Dann gibt es auch mindestens ein $v \in V$, für welches $A(v)\in W^\prime$ gilt. Es folgt dann $A^{-1}(W^\prime) \neq \emptyset$.\\
+			Sei nun $a,b \in W^\prime$ und $\lambda \in K$. Dann gilt, weil $W^\prime$ ein Untervektorraum ist:
+			\begin{align*}
+				a+b &\in W^\prime\\
+				\lambda a &\in W^\prime
+			\end{align*}
+			Weiterhin muss es dann auch $u,v \in A^{-1}(W^\prime)$ geben, für welche $a = A(u)$ und $b = A(v)$ gilt. Dann folgt, da es sich bei $A$ um eine lineare Abbildung handelt:
+			\begin{align*}
+				&\Rightarrow \ a+b = A(u) + A(v) = A(u+v) \in W^\prime \\
+				&\Rightarrow \ u+v \in A^{-1}(W^\prime)
+			\end{align*}
+			Damit ist $A^{-1}(W^\prime)$ abgeschlossen bezüglich der Addition. Für die skalare Multiplikation gilt dann:
+			\begin{align*}
+				&\Rightarrow \ \lambda a = \lambda A(u) = A(\lambda u) \in W^\prime \\
+				&\Rightarrow \ \lambda u \in A^{-1}(W^\prime)
+			\end{align*}
+ 			Also ist $A^{-1}(W^\prime)$ auch abgeschlossen bezüglich der skalaren Multiplikation. Es folgt, dass es sich bei $A^{-1}(W^\prime)$ um einen Untervektorraum von $V$ handeln muss. $\hfill\Box$
+
+		% subsubsection ii (end)
+
+	% subsection aufgabe_4 (end)
+
+\end{document}

@@ -1,0 +1,234 @@
+\input{pre}
+
+\usepackage{titling}
+\title{Lineare Algebra und Analytische Geometrie II \\ Übungsserie 08}
+\author{Markus Pawellek \\ 144645}
+% \email{markuspawellek@gmail.com}
+\newcommand{\email}{markuspawellek@gmail.com}
+
+
+\newcommand{\equivalent}{\Longleftrightarrow}
+
+\DeclareMathOperator{\tr}{tr}
+
+
+
+\usepackage{fancyhdr}
+
+\fancypagestyle{titlestyle}{
+	\fancyhf{}
+	\fancyfoot[C]{\footnotesize\bigskip\thepage/\pageref{LastPage}}
+	\renewcommand{\footrulewidth}{0.4pt}
+	\renewcommand{\headrulewidth}{0pt}
+}
+
+\fancypagestyle{mainstyle}{
+	\fancyhf{}
+	\fancyfoot[C]{\footnotesize\bigskip\thepage/\pageref{LastPage}}
+	\fancyhead[RO,LE]{\footnotesize \thetitle} %left
+	\fancyhead[RE,LO]{\footnotesize \theauthor} %right
+	\renewcommand{\footrulewidth}{0.5pt}
+	\renewcommand{\headrulewidth}{0.5pt}
+}
+
+\pagestyle{mainstyle}
+
+
+\newcommand{\articletitle}{
+	\thispagestyle{titlestyle}
+	\hrule
+	\section*{\centering \thetitle} % (fold)
+	\noindent
+	\parbox[b][][c]{0.5\textwidth}{\raggedright{\theauthor}}\hfill\parbox[b][][c]{0.5\textwidth}{\raggedleft{\email}}\\
+	\hrule
+	\bigskip
+}
+
+\newcommand{\transp}[1]{ {#1}^\m{T} }
+\newcommand{\inv}[1]{ {#1}^{-1} }
+\newcommand{\conj}[1]{ \overline{#1} }
+\newcommand{\idmat}{\m{I}}
+\newcommand{\define}{\coloneqq}
+\newcommand{\func}[3]{#1\colon#2\to#3}
+\DeclareMathOperator{\sign}{sgn}
+
+\begin{document}
+
+	\articletitle
+
+	\section*{Aufgabe 1} % (fold)
+	\label{sec:aufgabe_1}
+	
+		Sei die Abbildung $\func{q}{\SR^3}{\SR}$ für alle $(x,y,z)\in\SR^3$ gegeben durch
+		\[ q(x,y,z) \define x^2 + 4xy + 2xz + z^2 + 3x + z - 6 \]
+		Dann lässt sich $q$ auch durch die folgenden Größen $A\in\m{M}_3(\SR)$ mit $\transp{A}=A$, $b\in\SR^3$ und $c\in\SR$ beschreiben.
+		\[
+			A\define
+			\begin{pmatrix}
+				1 & 2 & 1 \\
+				2 & 0 & 0 \\
+				1 & 0 & 1
+			\end{pmatrix}
+			,\qquad b\define
+			\begin{pmatrix}
+				3/2 \\ 0 \\ 1/2
+			\end{pmatrix}
+			,\qquad c\define -6
+		\]
+		% Es gilt in diesem Falle für alle $x\in\SR^3$
+		\[ \implies \quad q(x) = \transp{x}Ax + 2\transp{b}x + c \]
+		$Q$ soll nun gerade die zugehörige Quadrik beschreiben.
+		\[ Q\define\set{x\in\SR^3}{q(x)=0} \]
+		Sowohl Drehungen als auch Verschiebungen ändern den Typ der Quadrik nicht.
+		Im Folgenden soll also eine äquivalente Form für $q$ gefunden werden, die den selben Typ beschreibt.
+
+		Für das charakteristische Polynom $\chi$ von $A$ ergibt sich
+		\[ \chi(\lambda) = -\lambda^3 + 2\lambda^2 + 4\lambda - 4 \quad \implies \quad \det A\neq 0 \]
+		\begin{table}[H]
+			\center
+			\begin{tabular}{r||r|r|r|r|r|r}
+				$\lambda$ & $-2$ & $-1$ & $0$ & $1$ & $2$ & $3$ \\
+				\hline
+				$\chi(\lambda)$ & $4$ & $-5$ & $-4$ & $1$ & $4$ & $-1$
+			\end{tabular}
+		\end{table}
+		$\chi$ besitzt den Grad $3$ und kann damit auch maximal $3$ reelle Nullstellen aufweisen.
+		Des Weiteren ist $\chi$ stetig, da es sich um ein Polynom handelt.
+		Nach dem Zwischenwertsatz gibt es also zwischen zwei Werten $\lambda_1,\lambda_2\in\SR$ mit $\lambda_1<\lambda_2$ und $\sign(\chi(\lambda_1))\neq\sign(\chi(\lambda_2))$ mindestens eine Nullstelle.
+		Aus der Tabelle wird damit ersichtlich, dass es drei verschiedene Eigenwerte $\lambda_1,\lambda_2,\lambda_3\in\sigma(A)$ gibt.
+		\[ \lambda_1 \in (-2,-1),\qquad \lambda_2 \in (0, 1), \qquad \lambda_3 \in (2,3) \]
+		Es sind damit zwei Eigenwerte positiv und ein Eigenwert negativ.
+		
+		Sei $u\in\SR^3$ ein beliebiger Translationsvektor.
+		Dann folgt für alle $x\in\SR^3$.
+		\[ q^\prime(x) \define q(x+u) = \transp{x}Ax + \transp{b^\prime}x + c^\prime \]
+		\[ b^\prime \define Au + b,\qquad c^\prime \define \transp{u}Au + 2\transp{b}u + c \]
+		Da $\det A \neq 0$ kann man $u\define -\inv{A}b$ setzen.
+		% Damit ergibt sich
+		\[ \implies \quad b^\prime = 0,\qquad c^\prime = \transp{b}u + c \quad \implies \quad q^\prime(x) = \transp{x}Ax + c^\prime \]
+		\[
+			u =
+			\transp{
+			\begin{pmatrix}
+				0 & -\tfrac{1}{2} & -\tfrac{1}{2}
+			\end{pmatrix}
+			} \quad \implies \quad c^\prime = -\tfrac{25}{4} < 0
+		\]
+
+		Weil $A$ symmetrisch ist, gibt es nun eine orthogonale Matrix $C\in\m{O}_3(\SR)$, sodass
+		\[ D \define \diag(\lambda_1,\lambda_2,\lambda_3) = \transp{C}AC \]
+		Die Anwendung von $C$ ändert, wie bereits gesagt, den Typ der Quadrik nicht.
+		Für alle $x\in\SR^3$ gilt
+		\[ q^{\prime\prime}(x) \define q^\prime(Cx) = \transp{x}Dx + c^\prime = \lambda_1x_1^2 + \lambda_2x_2^2 + \lambda_3x_3^2 + c^\prime \]
+		Durch Einsetzen der Vorzeichen folgt die beschreibende Gleichung für den Typ der Quadrik $Q$.
+		\[ Q\sim\set{(x,y,z)\in\SR^3}{ \abs{\lambda_2}x_2^2 + \abs{\lambda_3}x_3^2 - \abs{\lambda_1}x_1^2 = \abs{c^\prime} } \]
+		Diese beschreibt gerade einen einschaligen Hyperboloiden.
+		
+	% section aufgabe_1 (end)
+
+	\section*{Aufgabe 2} % (fold)
+	\label{sec:aufgabe_2}
+	
+		Sei eine Quadrik $Q$ in $\SR^3$ gerade durch die Abbildung $\func{q}{\SR^3}{\SR}$ mit der symmetrische Matrix $A\in\m{M}_3(\SR)$, dem Vektor $b\in\SR^3$ und einem Skalar $c\in\SR$ gegeben.
+		\[ q(x) \define \transp{x}Ax + \transp{b}x + c, \qquad Q \define \set{x\in\SR^3}{q(x)=0} \]
+		Dann lässt sich $Q$ auch durch eine quadratische Form $\func{\bar{q}}{\SR^4}{\SR}$ formulieren.
+		Es sei also für alle $x\in\SR^3$
+		\[
+			\bar{q}(\bar{x}) \define \transp{\bar{x}}\bar{A}\bar{x},\qquad \bar{A} \define
+			\begin{pmatrix}
+				A & b \\
+				\transp{b} & c
+			\end{pmatrix}
+			,\qquad \bar{x} \define
+			\begin{pmatrix}
+				x \\ 1
+			\end{pmatrix}
+		\]
+		\[ \implies \quad \bar{q}(\bar{x}) = q(x) \quad \implies \quad Q = \set{x\in\SR^3}{\bar{q}(\bar{x}) = 0} \]
+		$Q$ ist genau dann entartet, wenn $\det \bar{A} = 0$ gilt.
+		(Eine andere Möglichkeit ist es, alle Typen zu bestimmen und die aus der Vorlesung bekannten nicht entarteten Typen wegzulassen.
+		Diese wären Ellipsoid, ein- und zweischaliger Hyperboloid, elliptischer und hyperbolischer Paraboloid.)
+
+		Es seien nun $\lambda_1,\lambda_2,\lambda_3$ die Eigenwerte der Matrix $A$.
+		Durch eine entsprechende orthogonale Matrix kann $A$ auf Diagonalform $D\define \diag(\lambda_1,\lambda_2,\lambda_3)$ gebracht werden
+		Sind alle diese Eigenwerte ungleich Null, so kann durch eine Translation $b$ eliminiert werden (siehe Aufgabe 1).
+		Damit dann noch $\det \bar{A}=0$ folgt, muss noch $c^\prime = 0$ sein ($c^\prime$ beschreibt hier die Konstante, die nach der Translation entsteht).
+		Damit ergibt sich die folgende Form
+		\[ \lambda_1x_1^2 + \lambda_2x_2^2 + \lambda_3x_3^2 = 0 \]
+		Aus dieser Form ergeben sich aufgrund unterschiedlicher Signaturen von $A$ (hier: $(3,0)$ oder $(2,1)$) die ersten beiden Typen.
+		\begin{itemize}
+			\item $\abs{\lambda_1}x_1^2 + \abs{\lambda_2}x_2^2 + \abs{\lambda_3}x_3^2 = 0 \hfill\text{(Punkt)}$
+			\item $\abs{\lambda_1}x_1^2 + \abs{\lambda_2}x_2^2 - \abs{\lambda_3}x_3^2 = 0 \hfill\text{(Elliptischer Kegel)}$
+		\end{itemize}
+
+		Nun soll angenommen werden, dass $\lambda_3 = 0$ ist.
+		Es lassen sich wieder die ersten beiden Koordinaten von $b$ eliminieren.
+		Damit jedoch $\det\bar{A}=0$ erhalten bleibt, muss zwangsläufig auch $b_3 = 0$ folgen.
+		Die folgenden Typen decken dann die Fälle für $c^\prime = 0$ und $c^\prime \neq 0$ ab.
+		\begin{itemize}
+			\item $\abs{\lambda_1}x_1^2 + \abs{\lambda_2}x_2^2 = 0 \hfill\text{(Gerade)}$
+			\item $\abs{\lambda_1}x_1^2 - \abs{\lambda_2}x_2^2 = 0 \hfill\text{(zwei sich schneidende Ebenen)}$
+			\item $\abs{\lambda_1}x_1^2 + \abs{\lambda_2}x_2^2 = \abs{c^\prime} \hfill\text{(elliptischer Zylinder)}$
+			\item $\abs{\lambda_1}x_1^2 - \abs{\lambda_2}x_2^2 = \abs{c^\prime} \hfill\text{(hyperbolischer Zylinder)}$
+		\end{itemize}
+
+		Ist nun auch noch $\lambda_2 = 0$, so ist $\det\bar{A}=0$ immer erfüllt.
+		$b_2^\prime$ und $c^\prime$ können also getrennt voneinander vorkommen (siehe Vorlesung).
+		\begin{itemize}
+			\item $\abs{\lambda_1}x_1^2 + 2b_2^\prime x_2 = 0 \hfill\text{(parabolischer Zylinder)}$
+			\item $\abs{\lambda_1}x_1^2 = \abs{c^\prime} \hfill\text{(zwei parallele Ebenen)}$
+			\item $\abs{\lambda_1}x_1^2 = 0 \hfill\text{(Ebene)}$
+		\end{itemize}
+
+		Alle weiteren Möglichkeiten ergeben entweder die leere Menge oder sind selbst nicht entartet.
+
+	% section aufgabe_2 (end)
+
+	\section*{Aufgabe 3} % (fold)
+	\label{sec:aufgabe_3}
+	
+		Seien $n\in\SN$ und $V$ ein $\SR$-Vektorraum mit $\dim V = 2n$.
+		Sei weiterhin $\func{q}{V}{\SR}$ eine quadratische Form, welche in einer gewählten Basis durch die symmetrische Matrix $A\in\m{Gl}_{2n}(\SR)$ mit $q(x)\define \transp{x}Ax$ für alle $x\in V$ gegeben ist.
+		Gegeben sei ein Unterraum $U\subset V$ mit $\dim U = n$ und $q(U)=\curlb{0}$.
+
+		Da $A$ symmetrisch ist und $\det A \neq 0$, gibt es nach dem Satz von Sylvester eine Matrix $C\in\m{Gl}_{2n}(\SR)$, sodass für $p,q\in\SN$ mit $p+q=2n$ gilt
+		\[ S \define \diag( \underbrace{1,\ldots,1}_p,\underbrace{-1,\ldots,-1}_q ) = \transp{C}AC \]
+		Es sei nun
+		\[ \tilde{q}(x) \define q(Cx) = \transp{x}Sx \quad \implies \quad \tilde{q}\curvb{\inv{C}u}=q(u)=0 \]
+		Für ein $x\define \inv{C}u$ mit $u\in U$ muss also folgende Gleichung erfüllt werden
+		\[ \tilde{q}(x) = \sum_{i=1}^p x_i^2 - \sum_{i=p+1}^{2n} x_i^2 = 0 \]
+		Da $\dim U = n$ müssen $n$ Koordinaten frei wählbar sein.
+		Durch Induktion lässt sich zeigen, dass zu jeder frei wählbaren Koordinate eine festgelegte Koordinate mit umgekehrten Vorzeichen existieren muss.
+		Es muss damit $n$ positive Summanden und $n$ negative Summanden geben.
+		Die Signatur von $A$ beziehungsweise $S$ ist damit $(n,n)$.
+		Für eine Lösung muss also für alle $i\in\SN,i\leq n$ gelten
+		\[ x_i^2 = x_{i+n}^2 \quad \implies \quad x_i = \pm x_{i+n} \]
+		Ohne Einschränkung sei für $U$ hier $x_i=x_{i+n}$ für alle $i\in\SN,i\leq n$ gewählt.
+		Definiert man nun
+		\[ W \define \set{x\in V}{ x_i=-x_{i+n}\quad \text{für } i\in\SN,i\leq n } \]
+		Dann ist auch $W$ ein Unterraum mit $\dim W = n$ und $U\cap W=\curlb{0}$.
+		\[ \implies \quad U\oplus W = V \]
+		Des Weiteren gilt aufgrund der Definition $q(W) = 0$ in den jeweiligen Koordinaten.
+		Es gibt also einen Unterraum, der den Bedingungen genügt.
+
+		Permutiere nun $S$, sodass
+		\[ S=\diag( \underbrace{H,\ldots,H}_n ),\qquad H\define \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \]
+		Dies ist möglich, da die Signatur von $S$ gerade $(n,n)$ ist.
+		Definiere dann
+		\[
+			F\define \frac{1}{\sqrt{2}}
+			\begin{pmatrix}
+				1 & 1 \\
+				-1 & 1
+			\end{pmatrix}
+			,\qquad G\define \diag(\underbrace{F,\ldots,F}_n)
+		\]
+		$F$ und damit auch $G$ sind orthogonale Matrizen.
+		Durch sie lässt sich $q$ also in eine neue Basis transformieren.
+		\[ \implies \quad \hat{S} \define \transp{G}SG = \diag(\underbrace{\tilde{H},\ldots,\tilde{H}}_n),\qquad \tilde{H} \define \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \]
+		\[ \implies \quad \hat{q}(x)\define \tilde{q}(Gx) = \transp{x}\hat{S}x = x_1x_2 + x_3x_4 + \cdots + x_{2n-1}x_{2n} \]
+		\qedbox
+
+	% section aufgabe_3 (end)
+
+\end{document}

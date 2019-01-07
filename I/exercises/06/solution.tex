@@ -1,0 +1,454 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+
+\usepackage{geometry}
+\geometry{a4paper, lmargin=30mm, rmargin=20mm, tmargin=30mm, bmargin=20mm}
+\setlength{\parindent}{0mm}
+
+\usepackage[automark]{scrpage2}
+\usepackage{lastpage}
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\ihead[]{Lineare Algebra und Analytische Geometrie I \\ Übungsserie 6}
+\ohead[]{Name: Markus Pawellek \\ MN: 144645}
+\cfoot[]{\pagemark/\pageref{LastPage}}
+
+\begin{document}
+
+	\begin{center} \section*{Lineare Algebra und Analytische Geometrie I\\ Übungsserie 6} \end{center} % (fold)}
+	\label{sec:lineare_algebra_und_analytische_geometrie_i}
+
+
+	\subsection*{Aufgabe 1} % (fold)
+	\label{sub:aufgabe_1}
+	
+		\begin{description}
+			\item[Voraussetzung:] \hfill \\
+				Die Folge $p_n$ von Polynomfunktionen sei rekursiv definiert durch
+				$p_0(x) := 1$ \\
+				$p_1(x) := x$ \\
+				$p_{n+1}(x) := x\cdot p_n(x) - p_{n-1}(x)$ für alle $n \in \mathbb{N}$ mit $n \geq 1$
+			\item[Behauptung:] \hfill \\
+				Für alle $n \in \mathbb{N}$ ist $\{p_0,...,p_n\}$ eine Basis von $V_n$.
+			\item[Beweis:]
+		\end{description}
+		
+		Damit die Menge $\{p_0,...,p_n\}$ für alle $n \in \mathbb{N}$ eine Basis von $V_n$ sein kann, muss jedes Element dieser Menge auch ein Element aus dem Untervektorraum $V_n$ sein.
+		Um dies zu zeigen, soll der folgende Satz bewiesen werden:
+		\[
+			V_n \subset V_{n+1} \text{  für alle } n \in \mathbb{N}_0
+		\]
+		Für ein beliebiges $f \in V_{n}$ mit $n \in \mathbb{N}$ gilt für $a_i \in \mathbb{R}$ mit $i \in \mathbb{N}$ und $0 \leq i \leq n$:
+		\[
+			f(x) = \sum_{i=0}^n a_ix^i = 0\cdot x^{n+1} + \sum_{i=0}^n a_ix^i = \sum_{i=0}^{n+1} a_ix^i \text{ mit } a_{n+1} := 0
+		\] 
+		\[
+			\Rightarrow \ f \in V_{n+1} \ \Rightarrow \ V_n \subset \ V_{n+1}
+		\]
+		Damit folgt also, dass für ein $n\in \mathbb{N}$, dass $V_k \subset V_n$ für alle $k\in \mathbb{N}$ mit $0\leq k < n$ gelten muss (theoretisch müsste man dies noch durch Induktion herleiten).
+		Nun soll durch Induktion hergeleitet werden, dass alle Funktionen Element der jeweiligen Untervektorräume sind:\\
+
+		\underline{Induktionsanfang:}
+		\[
+			p_0(x) = 1 = \sum_{i=0}^0 a_ix^i \text{ mit } a_0 := 1
+		\]
+		\[
+			\Rightarrow \ p_0 \in V_0 \ \Rightarrow \ p_0 \in V_1
+		\]
+		\[
+			p_1(x) = x = \sum_{i=0}^1 b_ix^i \text{ mit } b_0 := 0 \text{ und } b_1 := 1
+		\]
+		\[
+			\Rightarrow \ p_1 \in V_1
+		\]
+
+		\underline{Induktionsvoraussetzung:}\\
+		$p_n \in V_n$ und $p_{n-1} \in V_n$ \\
+
+		\underline{Induktionsbehauptung:}\\
+		$p_{n+1} \in V_{n+1}$\\
+
+		\underline{Induktionsschluss:}
+		Für $p_n$ und $p_{n-1}$ muss für geeignete Koeffizienten $a_i,b_i \in \mathbb{R}$ mit $i \in \mathbb{N}$ und $0 \leq i \leq n$ gelten:
+		\begin{eqnarray*}
+			p_{n-1}(x) &=& \sum_{i=0}^n a_ix^i\\
+			p_n(x) &=& \sum_{i=0}^n b_ix^i
+		\end{eqnarray*}
+		Dann folgt durch Einsetzen in die Bedingung für $p_{n+1}$:
+		\[
+			p_{n+1}(x) = x\cdot p_n(x) - p_{n-1}(x) = x\cdot \sum_{i=0}^n b_ix^i - \sum_{i=0}^n a_ix^i = \sum_{i=0}^n b_ix^{i+1} - \sum_{i=0}^n a_ix^i 
+		\]
+		\[
+			= \sum_{i=1}^{n+1} b_{i-1}x^i - \sum_{i=0}^n a_ix^i = \sum_{i=0}^{n+1} c_ix^i
+		\]
+		mit $c_i := b_{i-1}-a_i$ für $1\leq i \leq n$ und $c_0 := -a_0$ und $c_{n+1} := b_{n}$.
+		\[
+			\Rightarrow \ p_{n+1} \in V_{n+1}
+		\]
+		Durch Induktion ist nun bewiesen, dass für alle $n \in \mathbb{N}$ $p_n \in V_n$ gilt. Damit muss aufgrund des oben gezeigten Satzes für alle $k \in \mathbb{N}$ mit $0\leq k < n$ auch $p_k \in V_n$ gelten.
+		Aus Aufgabe 3 ist bekannt, dass $\{1,x,...,x^n\}$ eine Basis von Basis von $V_n$ für $n \in \mathbb{N}$ ist. Diese Menge enthält $n+1$ Elemente. Aus der Vorlesung ist bekannt, dass jede andere Basis genauso viele Elemente enthalten muss und dass dadurch $\dim(V_n) = n+1$ gelten muss. Die Menge $\{p_0,...,p_n\}$ enthält ebenfalls $n+1$ Elemente. Aus der Vorlesung ist ebenfalls bekannt, dass eine Menge linear unabhängiger Vektoren eine Basis des Vektorraums darstellt, wenn die Anzahl der Elemente in dieser Menge der Dimension des Vektorraums gleicht. Damit muss also nur gezeigt werden, dass die Menge $\{p_0,...,p_n\}$ linear unabhängig ist, da sie dann eine Basis von $V_n$ sein muss. Dies soll durch Induktion gezeigt werden. \\
+
+		\underline{Induktionsanfang für $\{p_0\}$ und $\{p_0,p_1\}$:}\\
+		Sei $a,b \in \mathbb{R}$. Dann gilt für alle $x \in \mathbb{R}$:
+		\[
+			a\cdot p_0(x) = 0 = a\cdot 1
+		\]
+		\[
+			\Rightarrow \ a = 0 \ \Rightarrow \ \{p_0\} \text{ muss linear unabhängiges System zu } V_0 \text{ bilden.}
+		\]
+		\[
+			a\cdot p_0(x) + b\cdot p_1(x) = 0 = a+bx
+		\]
+		\[
+			\Rightarrow \ b = 0 \ \Rightarrow \ a = 0 \ \Rightarrow \ \{p_0, p_1\} \text{ muss linear unabhängiges System zu } V_1 \text{ bilden.}
+		\]
+
+		\underline{Induktionsvoraussetzung:}\\
+		$\{p_0,...,p_n\}$ ist linear unabhängig.\\
+
+		\underline{Induktionsbehauptung:}\\
+		$\{p_0,...,p_{n+1}\}$ ist linear unabhängig.\\
+
+		\underline{Induktionsschluss:}\\
+		Wenn $\{p_0,...,p_{n+1}\}$ eine Basis von $V_{n+1}$ ist, darf es nur eine triviale Lösung der folgenden Linearkombination geben (alle Koeffizienten seien Elemente aus $\mathbb{R}$).
+		\[
+			 	a_0p_0(x) + ... + a_{n+1}p_{n+1}(x) = 0 = a_0p_0(x) + ... + a_{n+1}\cdot\left( x\cdot p_n(x) - p_{n-1}(x) \right)
+		\] 
+		\[
+			= a_0p_0(x) + ... + (a_{n-1}-a_{n+1})p_{n-1} + (a_n + a_{n+1}x)p_n(x)
+		\]
+		Aufgrund der Induktionsvoraussetzung kann die Lösung dieser Gleichung aber nur trivial sein. Damit müssen alle Koeffizienten Null sein. Es folgt also:
+		\begin{eqnarray*}
+			a_{n-1}-a_{n+1} &=& 0\\
+			a_n + a_{n+1}x &=& 0
+		\end{eqnarray*}
+		Da die zweite Gleichung für alle $x \in \mathbb{R}$ gelten muss, folgt, dass die Lösung nur für $a_{n+1} = 0$ gegeben ist. Damit muss nun auch $a_n = 0$ und $a_{n-1} = 0$ gelten.
+		Damit sind also alle Koeffizienten für die Linearkombination der Menge $\{p_0,...,p_{n+1}\}$ Null. Es folgt also, dass diese Menge linear unabhängig ist. Aus den oben beschriebenen Sachen folgt, dass die Menge $\{p_0,...,p_{n}\}$ für alle $n \in \mathbb{N}$ also eine Basis von $V_n$ bilden muss. $\hfill\Box$
+		 
+
+	% subsection aufgabe_1 (end)
+
+	\newpage
+
+	\subsection*{Aufgabe 2} % (fold)
+	\label{sub:aufgabe_2}
+	
+	\subsubsection*{a)} % (fold)
+	\label{ssub:a_}
+
+		\begin{description}
+			\item[Voraussetzung:] \hfill \\
+				$U_{+1} := \{f \in V \ | \ \forall \ x \in \mathbb{R} \text{ gilt } f(-x) = f(x)\}$ \\
+				$U_{-1} := \{f \in V \ | \ \forall \ x \in \mathbb{R} \text{ gilt } f(-x) = -f(x)\}$				
+			\item[Behauptung:] \hfill \\
+				$U_{+1}$ und $U_{-1}$ sind Untervektorräume von V.
+			\item[Beweis:]
+		\end{description}
+		
+		Für jeden Untervektorraum muss nach der Definition Abgeschlossenheit bezüglich der Addition und der skalaren Multiplikation gelten. Des Weiteren müssen beide Mengen ungleich der leeren Menge sein.
+
+		Sei $f \in V$ mit $f(x) = x$. Dann gilt:
+		\[
+			f(-x) = -x = -f(x) \ \Rightarrow \ f \in U_{-1} \ \Rightarrow \ U_{-1} \neq \varnothing
+		\]
+		Sei nun $f,g \in U_{-1}$ beliebig. Dann gilt $f(-x)=-f(x)$ und $g(-x)=-g(x)$. Es folgt:
+		\[
+			(f+g)(-x) = f(-x) + g(-x) = -f(x) -g(x) = -(f(x)+g(x)) = -(f+g)(x)
+		\]
+		\[
+			\Rightarrow \ (f+g) \in U_{-1} \ \Rightarrow \ U_{-1} \text{ ist abgeschlossen bezüglich der Addition.}
+		\]
+		Sei weiterhin $\lambda \in \mathbb{R}$ beliebig. Dann gilt:
+		\[
+			(\lambda f)(-x) = \lambda \cdot f(-x) = \lambda\cdot (-f(x)) = (-1)\cdot \lambda \cdot f(x) = (-1)\cdot (\lambda f)(x) = -(\lambda f)(x)
+		\]
+		\[
+			\Rightarrow \ (\lambda f)\in U_{-1} \ \Rightarrow \ U_{-1} \text{ ist abgeschlossen bezüglich der skalaren Multiplikation.}
+		\]
+		Damit muss es sich bei $U_{-1}$ um einen Untervektorraum von $V$ handeln.\\
+
+		Sei $f \in V$ mit $f(x) = 1$. Dann gilt:
+		\[
+			f(-x) = 1 = f(x) \ \Rightarrow \ f \in U_{+1} \ \Rightarrow \ U_{+1} \neq \varnothing
+		\]
+		Sei nun $f,g \in U_{-1}$ beliebig. Dann gilt $f(-x)=f(x)$ und $g(-x)=g(x)$. Es folgt:
+		\[
+			(f+g)(-x) = f(-x) + g(-x) = f(x) + g(x) = (f+g)(x)
+		\]
+		\[
+			\Rightarrow \ (f+g)\in U_{+1} \ \Rightarrow \ U_{+1} \text{ ist abgeschlossen bezüglich der Addition.}
+		\]
+		Sei weiterhin $\lambda \in \mathbb{R}$ beliebig. Dann gilt:
+		\[
+			(\lambda f)(-x) = \lambda \cdot f(-x) = \lambda \cdot f(x) = (\lambda f)(x)
+		\]
+		\[
+			\Rightarrow \ (\lambda f)\in U_{+1} \ \Rightarrow \ U_{+1} \text{ ist abgeschlossen bezüglich der skalaren Multiplikation.}
+		\]
+		Damit muss sich also auch bei $U_{+1}$ um einen Untervektorraum von $V$ handeln. $\hfill\Box$
+		
+	\subsubsection*{b)} % (fold)
+	\label{ssub:b_}
+	
+		\begin{description}
+			\item[Voraussetzung:] \hfill \\
+				Wie bei a).
+			\item[Behauptung:] \hfill \\
+				$V = U_{+1} \oplus U_{-1}$
+			\item[Beweis:]
+		\end{description}
+		
+		Sei $f \in V$ eine beliebige Funktion mit
+		\[
+			f \in U_{+1} \ \wedge \ f \in U_{-1}
+		\]
+		\[
+			\Rightarrow \ f(-x) = f(x) = -f(x) \ \Rightarrow \ f(x) = -f(x)	
+		\]
+		Da es sich für alle $x \in \mathbb{R}$ bei $f(x)$ um reelle Zahlen handelt, kann diese Gleichung nur erfüllt werden, wenn $f(x) = 0$ gilt.
+		Es folgt also:
+		\[
+		 	U_{+1} \cap U_{-1} = \{0\}	
+		\]
+		Aus den bereits bekannten Sätzen der Vorlesung folgt, dass es sich bei der Summe dieser Untervektorräume um eine direkte Summe handelt.
+		Wenn $V$ eine direkte Summe aus $U_{+1}$ und $U_{-1}$ ist, muss die Darstellung für jedes $v \in V$ mit $v = v_{+1} + v_{-1}$ für $v_{+1} \in U_{+1}$ und $v_{-1} \in U_{-1}$ existieren und eindeutig sein. 
+		Da es sich bereits um eine direkte Summe handelt, sind automatisch alle gefundenen Darstellungen eindeutig. Es muss also noch gezeigt werden, dass solch eine Darstellung für alle $v \in V$ existiert.\\
+
+		Sei nun ein beliebiges $f \in V$. Dann gilt für ein $n \in \mathbb{N}$ und $a_i \in \mathbb{R}$ mit $i \in \mathbb{N}$ und $0\leq i \leq n$:
+		\[
+			f(x) = \sum_{i=0}^n a_ix^i = \sum_{i=0}^{n/2} a_{2i}x^{2i} + \sum_{i=0}^{n/2} a_{2i+1}x^{2i+1}
+		\]
+		Hierbei wurde die Summe in gerade und ungerade Exponenten aufgespalten. Sein nun
+		\[
+			f_{+1}(x) := \sum_{i=0}^{n/2} a_{2i}x^{2i} = \sum_{i=0}^n b_ix^{i}
+		\]
+		mit $b_i \in \mathbb{R}$ und für gerade $i$ mit $b_i = a_i$ und für ungerade $i$ mit $b_i = 0$. Weiterhin sei
+		\[
+			f_{-1}(x) := \sum_{i=0}^{n/2} a_{2i+1}x^{2i+1} = \sum_{i=0}^n c_ix^{i}
+		\]
+		mit $c_i \in \mathbb{R}$ und für gerade $i$ mit $c_i = 0$ und für ungerade $i$ mit $c_i = a_i$.
+		Dann gilt:
+		\[
+			f_{+1} \in V 
+		\]
+		\[
+			f_{-1} \in V
+		\]
+		und
+		\[
+			f(x) = f_{+1}(x) + f_{-1}(x)
+		\]
+		Weiterhin folgt:
+		\[
+			f_{+1}(-x) = \sum_{i=0}^{n/2} a_{2i}(-x)^{2i} = \sum_{i=0}^{n/2} a_{2i}\left({(-x)^2}\right)^i = \sum_{i=0}^{n/2} a_{2i}\left(x^2\right)^i = \sum_{i=0}^{n/2} a_{2i}x^{2i} = f_{+1}(x)
+		\]
+		\[
+			\Rightarrow \ f_{+1} \in U_{+1}
+		\]
+		\[
+			f_{-1}(-x) = \sum_{i=0}^{n/2} a_{2i+1}(-x)^{2i+1} = \sum_{i=0}^{n/2} a_{2i+1}\cdot (-x)^{2i}\cdot (-x) = \sum_{i=0}^{n/2} a_{2i+1}\cdot x^{2i}\cdot (-x)   
+		\]
+		\[
+			= \sum_{i=0}^{n/2} (-1)\cdot a_{2i+1}x^{2i+1} = -\sum_{i=0}^{n/2} a_{2i+1}x^{2i+1} = -f_{-1}(x) 
+		\]
+		\[
+			\Rightarrow \ f_{-1} \in U_{-1}
+		\]
+		Damit kann also eine beliebige Funktion aus $V$ durch die Summe einer Funktion aus $U_{+1}$ und einer Funktion aus $U_{-1}$. Daraus folgt, da $U_{+1}$ und $U_{-1}$ nur Elemente aus $V$ enthalten, dass
+		\[
+			V = U_{+1} \oplus U_{-1}
+		\]
+		gilt. Die gefundene Darstellung ist also auch eindeutig. $\hfill\Box$
+
+	% subsubsection b_ (end)
+
+	\subsubsection*{c)} % (fold)
+	\label{ssub:c_}
+	
+		\begin{description}
+			\item[Voraussetzung:] \hfill \\
+				Wie bei a).
+			\item[Aufgabe:] \hfill \\
+				Geben Sie $\pi_{+1}:V\longrightarrow U_{+1}$ und $\pi_{-1}:V\longrightarrow U_{-1}$ explizit an.
+			\item[Lösung:]
+		\end{description}
+		
+		Gerade eben wurde gezeigt, dass es für alle $v \in V$ eine eindeutige Darstellung $v = v_{+1} + v_{-1}$ für $v_{+1} \in U_{+1}$ und $v_{-1} \in U_{-1}$ gibt. Da es sich bei den Abbildungen um Projektionen handelt, folgt:
+		\begin{eqnarray*}
+			\pi_{+1}(v) &=& v_{+1} \\
+			\pi_{-1}(v) &=& v_{-1}
+		\end{eqnarray*}
+		Für $v$ muss für ein $n \in \mathbb{N}$ und gewisse Koeffizienten $a_i \in \mathbb{R}$ mit $i \in \mathbb{N}$ und $0 \leq i \leq n$ Folgendes gelten:
+		\[
+			v = \sum_{i=0}^n a_ix^i = \sum_{i=0}^{n/2} a_{2i}x^{2i} + \sum_{i=0}^{n/2} a_{2i+1}x^{2i+1} = v_{+1} + v_{-1}
+		\]
+		Es folgt also für $v_{+1}$ und $v_{-1}$, da es sich bei dieser Darstellung um eine eindeutige Darstellung handelt:
+		\begin{eqnarray*}
+			v_{+1} &=& \sum_{i=0}^{n/2} a_{2i}x^{2i} \\
+			v_{-1} &=& \sum_{i=0}^{n/2} a_{2i+1}x^{2i+1}
+		\end{eqnarray*}
+		Für die Projektionen gilt also:
+		\begin{eqnarray*}
+			\pi_{+1}\left(\sum_{i=0}^n a_ix^i\right) &=& \sum_{i=0}^{n/2} a_{2i}x^{2i} \\
+			\pi_{-1}\left(\sum_{i=0}^n a_ix^i\right) &=& \sum_{i=0}^{n/2} a_{2i+1}x^{2i+1}
+		\end{eqnarray*}
+
+	% subsubsection c_ (end)
+
+	% subsection aufgabe_2 (end)
+
+	\newpage
+
+	\subsection*{Aufgabe 3} % (fold)
+	\label{sub:aufgabe_3}
+	
+		\begin{description}
+			\item[Voraussetzung:] \hfill \\
+				Seien die Mengen $\{1,x,x^2,...,x^n\}$ und $\{p_0,p_1,...,p_n\}$ (wie in Aufgabe 1) zwei Basen von $V_n$.
+			\item[Aufgabe:] \hfill \\
+				Setzen Sie $n=4$ und berechnen sie die Abbildungsmatrizen zwischen diesen Basen.
+			\item[Lösung:]
+		\end{description}
+		
+		Beide Basen enthalten für $n=4$ fünf Elemente. Damit muss es sich bei den beiden Matrizen um eine $5\times 5$-Matrix handeln. Jeder Basisvektor muss sich aus einer Linearkombination der anderen Basis ergeben.
+		Die Koeffizienten können dabei als Matrix geschrieben werden.\\
+
+		\underline{$\{1,x,x^2,x^3,x^4\} \longrightarrow \{p_0,p_1,p_2,p_3,p_4\}$:}
+		Für diverse Koeffizienten $a_{ij} \in \mathbb{R}$ für $i,j \in \mathbb{N}$ und $0 \leq i,j \leq 4$ muss also folgendes Gleichungssystem für alle $x \in \mathbb{R}$ erfüllt sein.
+		\begin{eqnarray*}
+			p_0(x) = 1 &=& a_{00} + a_{01}x + a_{02}x^2 + a_{03}x^3 +a_{04}x^4 \\
+			p_1(x) = x &=& a_{10} + a_{11}x + a_{12}x^2 + a_{13}x^3 +a_{14}x^4 \\
+			p_2(x) = x^2 -1 &=& a_{20} + a_{21}x + a_{22}x^2 + a_{23}x^3 +a_{24}x^4 \\
+			p_3(x) = x^3-2x &=& a_{30} + a_{31}x + a_{32}x^2 + a_{33}x^3 +a_{34}x^4 \\
+			p_4(x) = x^4 -3x^2 + 1 &=& a_{40} + a_{41}x + a_{42}x^2 + a_{43}x^3 +a_{44}x^4 
+		\end{eqnarray*}
+		Dabei ist dann $(a_{ij})$ die Abbildungsmatrix. Da alle Gleichungen für beliebige $x\in \mathbb{R}$ erfüllt sein müssen, folgt durch Ablesen:
+		\[
+			M := (a_{ij}) = 
+			\begin{pmatrix}
+				1 & 0 & 0 & 0 & 0 \\
+				0 & 1 & 0 & 0 & 0 \\
+				-1 & 0 & 1 & 0 & 0 \\
+				0 & -2 & 0 & 1 & 0 \\
+				1 & 0 & -3 & 0 & 1 \\
+			\end{pmatrix}
+		\]
+
+		\underline{$\{p_0,p_1,p_2,p_3,p_4\} \longrightarrow \{1,x,x^2,x^3,x^4\}$:}
+		Die Matrix für diese Abbildung muss aus Definitionsgründen die inverse Matrix zu $M$ sein. Auch hier kann wieder ein Gleichungssystem beschrieben werden, welches für bestimmte $b_{ij} \in \mathbb{R}$ mit den bereits definierten $i,j$ für alle $x \in \mathbb{R}$ erfüllt sein muss.
+		\begin{eqnarray*}
+			1 &=& a_{00} + a_{01}x + a_{02}(x^2-1) + a_{03}(x^3-2x) +a_{04}(x^4-3x^2+1) \\
+			x &=& a_{10} + a_{11}x + a_{12}(x^2-1) + a_{13}(x^3-2x) +a_{14}(x^4-3x^2+1) \\
+			x^2 &=& a_{20} + a_{21}x + a_{22}(x^2-1) + a_{23}(x^3-2x) +a_{24}(x^4-3x^2+1) \\
+			x^3 &=& a_{30} + a_{31}x + a_{32}(x^2-1) + a_{33}(x^3-2x) +a_{34}(x^4-3x^2+1) \\
+			x^4 &=& a_{40} + a_{41}x + a_{42}(x^2-1) + a_{43}(x^3-2x) +a_{44}(x^4-3x^2+1) 
+		\end{eqnarray*}
+		Auch hier ist wieder $(b_{ij})$ die Abbildungsmatrix. Für die ersten beiden Zeilen der Matrix ergibt sich diese Lösung wieder durch Ablesen.
+		Für die dritte Zeile muss $a_{22}=1$, um das quadratische Glied einzubinden. Hinzu kommt dann aber eine $-1$, welche durch setzen von $a_{20}=1$ wieder subtrahiert wird. Die restlichen Koeffizienten dieser Zeile werden dann einfach Null gesetzt. Für die dritte Zeile wird $a_{33} = 1$ gesetzt, um das kubische Glied einzubinden. Um die entstehenden $-2x$ zu subtrahieren, setzt man $a_{31} = 2$ und den Rest wieder Null. Für die vierte Zeile gilt ähnliches. Man setzt $a_{44}=1$ für das Glied vierter Potenz und addiert dann mit $a_{42}=3$ die benötigten $3x^2$. Das entstehende Absolutglied aus beiden Koeffizienten wird dann durch $a_{40} = 2$ subtrahiert.
+		\[
+			M^{-1} = (b_{ij}) = 
+			\begin{pmatrix}
+				1 & 0 & 0 & 0 & 0 \\
+				0 & 1 & 0 & 0 & 0 \\
+				1 & 0 & 1 & 0 & 0 \\
+				0 & 2 & 0 & 1 & 0 \\
+				2 & 0 & 3 & 0 & 1 \\
+			\end{pmatrix}
+		\]
+
+	% subsection aufgabe_3 (end)
+
+	\newpage
+
+	\subsection*{Aufgabe 4} % (fold)
+	\label{sub:aufgabe_4}
+
+		\begin{description}
+			\item[Voraussetzung:] \hfill \\
+				$\Phi_n:V_n\longrightarrow \mathbb{R}^{n+1}$ mit $\Phi_n(f) := (f(0), f(1),...,f(n)$ für $n \in \mathbb{N}$
+		\end{description}		
+	
+	\subsubsection*{(i)} % (fold)
+	\label{ssub:subsubsection_name}
+	
+		\begin{description}
+			\item[Behauptung:] \hfill \\
+				$\Phi_n$ ist linear.
+			\item[Beweis:]
+		\end{description}
+		
+		Die Abbildung $\Phi_n$ ist per Definition linear, wenn für alle $f,g \in V_n$ und für alle $\lambda \in \mathbb{R}$ Folgendes gilt:
+		\begin{eqnarray*}
+			\Phi_n(f+g) &=& \Phi_n(f) + \Phi_n(g) \\
+			\Phi_n(\lambda f) &=& \lambda \cdot \Phi_n(f)
+		\end{eqnarray*}
+		Seien nun $f,g \in V_n$ beliebig für $n \in \mathbb{N}$. Dann gilt:
+		\[
+			\Phi_n(f+g) = \left( (f+g)(0),...,(f+g)(n) \right) = \left( f(0)+g(0),...,f(n)+g(n) \right) 
+		\]
+		\[
+			= \left( f(0),...,f(n) \right) + \left( g(0),...,g(n) \right) = \Phi_n(f) + \Phi_n(g)
+		\]
+		Sei weiterhin $\lambda \in \mathbb{R}$ beliebig. Dann gilt:
+		\[
+			\Phi_n(\lambda f) = \left( (\lambda f)(0),...,(\lambda f)(n) \right) = \left( \lambda \cdot f(0),... ,\lambda \cdot f(n) \right) = \lambda \cdot \left( f(0),...,f(n) \right) = \lambda \cdot \Phi_n(f)
+		\]
+		Damit gelten die Voraussetzungen für eine lineare Abbildung. Also muss $\Phi_n$ linear sein. $\hfill\Box$
+
+	% subsubsection subsubsection_name (end)
+
+	\subsubsection*{(ii)} % (fold)
+	\label{ssub:subsubsection_name}
+	
+		\begin{description}
+			\item[Behauptung:] \hfill \\
+				$\Phi_3$ ist ein Isomorphismus.
+			\item[Beweis:]
+		\end{description}
+		
+		$\Phi_3$ ist ein Isomorphismus, wenn es sich um eine bijektive lineare Abbildung handelt. Die Linearität wurde bereits gezeigt. Damit muss also noch Injektivität und Surjektivität.\\
+
+		\underline{Injektivität:}\\
+		Annahme: $\Phi_3$ ist nicht injektiv.\\
+		Dann gibt es $f,g \in V_3$ mit $f(x)\neq g(x)$ für alle $x\in \mathbb{R}$ für die $\Phi_3(f)=\Phi_3(g)$ gilt. Für $f,g$ muss weiterhin für $a_i,b_i \in \mathbb{R}$ mit $i \in \mathbb{N}$ und $0\leq i \leq 3$ gelten:
+		\begin{eqnarray*}
+			f(x) &=& \sum_{i=0}^3 a_ix^i = a_0 +a_1x +a_2x^2 + a_3x^3 \\	
+			g(x) &=& \sum_{i=0}^3 b_ix^i = b_0 +b_1x +b_2x^2 + b_3x^3 
+		\end{eqnarray*}
+		Es muss also für mindestens ein $i$ $a_i\neq b_i$ gelten. Es folgt:
+		\begin{eqnarray*}
+			\Phi_3(f) &=& (a_0, a_0+a_1+a_2+a_3, a_0+2a_1+4a_2+8a_3, a_0+3a_1+9a_2+27a_3) \\
+			\Phi_3(g) &=& (b_0, b_0+b_1+b_2+b_3, b_0+2b_1+4b_2+8b_3, b_0+3b_1+9b_2+27b_3) 			
+		\end{eqnarray*}
+		Wegen $\Phi_3(f)=\Phi_3(g)$ folgt:
+		\begin{eqnarray*}
+			\Rightarrow \ &\text{(wegen erster Koordinate)} & a_0 = b_0 \\
+			\Rightarrow \ &\text{(vorherige Gl. in zweite Koordinate eingesetzt)} & a_1+a_2+a_3 = b_0+b_1+b_2+b_3 \\
+			\Rightarrow \ &\text{(vorherige Gl. in dritte Koordinate eingesetzt)} & a_2 + 3a_3 = b_2 + 3b_3 \\
+			\Rightarrow \ &\text{(vorherige Gl. in vierte Koordinate eingesetzt)} & a_3 = b_3 \\
+		\end{eqnarray*}
+		\[
+			\Rightarrow \ a_2 = b_2 \ \Rightarrow \ a_1 = b_1 \ \lightning
+		\]
+		Da nun folgen, dass alle Koeffizienten zueinander gleich sind, muss es ein Widerspruch sein. Damit muss $\Phi_3$ injektiv sein.\\
+
+		\underline{Surjektivität:}\\
+		Annahme: $\Phi_3$ ist nicht surjektiv.\\
+		Dann gibt ein $(w,x,y,z)\in \mathbb{R}^4$ für welches $\Phi_3(f) \neq (w,x,y,z)$ für alle $f \in V_3$ gilt. Damit darf es also keine Lösung für die folgende Gleichung geben (die Koeffizienten $a_i$ seien wie oben definiert, nur beliebig):
+		\[
+			\Phi_3(f) = (a_0, a_0+a_1+a_2+a_3, a_0+2a_1+4a_2+8a_3, a_0+3a_1+9a_2+27a_3) = (w,x,y,z)
+		\]
+		Dieses Gleichungssystem ist allerdings für beliebige Größen eindeutig lösbar (bei der Injektivität aufgezeigt). $\lightning$ Es muss sich also um einen Widerspruch handeln. Also muss $\Phi_3$ surjektiv sein. Es folgt also allgemein, dass $\Phi_3$ ein Isomorphismus ist. $\hfill\Box$
+
+	% subsubsection subsubsection_name (end)
+
+	% subsection aufgabe_4 (end)
+	
+	% section lineare_algebra_und_analytische_geometrie_i (end)
+
+\end{document}
